@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <meta name="theme-color" content="#C8AD8B">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>售後服務追蹤＋奶茶小遊戲 | 網頁版</title>
+    <title>MORE大家庭｜夥伴紀錄</title>
     <style>
         * {
             margin: 0;
@@ -16,339 +13,771 @@
         }
 
         body {
-            background: #F7EFE1;
-            font-family: system-ui, -apple-system, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+            background-color: #F9F0E3;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
             padding: 20px 16px 40px;
+            color: #4A3525;
         }
 
-        .container {
-            max-width: 700px;
+        .app-container {
+            max-width: 600px;
             margin: 0 auto;
         }
 
-        /* 卡片樣式 - 奶茶色系 */
-        .card {
-            background: #FFFBF5;
-            border-radius: 32px;
-            box-shadow: 0 8px 20px rgba(139, 89, 57, 0.08);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid #EDDFC7;
-        }
-
-        h1 {
-            font-size: 1.9rem;
-            font-weight: 700;
+        .header {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 0.25rem;
-            color: #5E3A2C;
-        }
-
-        h1 span {
-            background: #F1E5D2;
-            padding: 6px 10px;
-            border-radius: 60px;
-            font-size: 1.5rem;
-        }
-
-        .sub {
-            color: #9B7B5C;
-            font-size: 0.85rem;
-            margin-bottom: 1.2rem;
-            border-left: 3px solid #D9B48B;
-            padding-left: 12px;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-left: 4px solid #D9B48B;
-            padding-left: 12px;
-            color: #5E3A2C;
-        }
-
-        .flex-row {
-            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 20px;
             flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-bottom: 1.2rem;
+            gap: 10px;
+            border-bottom: 2px solid #EADBC6;
+            padding-bottom: 12px;
         }
-
-        .form-group {
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #9B6A42;
+        }
+        .tab-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            background: #F3E9DE;
+            padding: 6px;
+            border-radius: 60px;
+        }
+        .tab-btn {
             flex: 1;
-            min-width: 140px;
-        }
-
-        label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #A27B5C;
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        input, select, button {
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: 20px;
-            border: 1.5px solid #EADBC5;
-            background: #FFFFFF;
-            font-size: 0.9rem;
-            transition: 0.2s;
-            outline: none;
-            font-family: inherit;
-            color: #4B3621;
-        }
-
-        input:focus, select:focus {
-            border-color: #C8AD8B;
-            box-shadow: 0 0 0 3px rgba(200, 173, 139, 0.25);
-        }
-
-        button {
-            background: #D9B48B;
-            color: white;
-            font-weight: 600;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            background: transparent;
             border: none;
+            color: #8B5A2B;
             cursor: pointer;
         }
-
-        button:active {
-            transform: scale(0.97);
-            background: #C8A27A;
+        .tab-btn.active {
+            background: #FFF7EF;
+            color: #B87C4A;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border: 1px solid #EADBC6;
+        }
+        .tab-pane {
+            display: none;
+            animation: fade 0.2s ease;
+        }
+        .tab-pane.active-pane {
+            display: block;
+        }
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(5px);}
+            to { opacity: 1; transform: translateY(0);}
         }
 
-        .btn-outline {
-            background: #F4EDE2;
-            color: #8B5A3C;
-            border: 1px solid #E2D1BA;
-        }
-
-        .btn-outline:active {
-            background: #E8DCCB;
-        }
-
-        .search-bar {
-            background: #FFF8F0;
-            border-radius: 60px;
-            padding: 4px 16px 4px 20px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            margin-bottom: 1.2rem;
-            border: 1px solid #EDDFC7;
-        }
-        .search-bar input {
-            border: none;
-            background: transparent;
-            padding: 10px 0;
-        }
-        .search-bar input:focus {
-            box-shadow: none;
-        }
-        .search-bar button {
-            width: auto;
-            padding: 8px 16px;
-            border-radius: 40px;
-        }
-
-        /* 紀錄卡片 */
-        .record-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .record-item {
-            background: #FFFCF8;
-            border-radius: 24px;
-            padding: 14px 16px;
-            border: 1px solid #EFE2D2;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        /* 卡片簡約 */
+        .card {
+            background: #FFFBF5;
+            border-radius: 28px;
+            padding: 16px 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            border: 1px solid #F2E5D6;
+            margin-bottom: 14px;
+            cursor: pointer;
             transition: 0.1s;
         }
-        .record-header {
+        .card:active {
+            background: #FEF6EC;
+        }
+        .flex-between {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 8px;
         }
-        .customer-name {
-            font-weight: 700;
-            font-size: 1.05rem;
-            color: #5E3A2C;
-        }
-        .service-badge {
-            background: #F1E5D6;
-            padding: 4px 12px;
+        .level-badge {
+            background: #F4EADF;
+            padding: 3px 12px;
             border-radius: 40px;
             font-size: 0.7rem;
-            font-weight: 600;
-            color: #9B6E48;
+            font-weight: 500;
+            color: #9B6A42;
         }
-        .record-details {
-            font-size: 0.85rem;
-            color: #7C5D42;
+        .status-badge {
+            background: #F3E9DE;
+            border-radius: 30px;
+            padding: 2px 8px;
+            font-size: 0.65rem;
+            margin-left: 6px;
+            color: #7C5E3A;
+        }
+        .qualify-badge {
+            background: #E0EED7;
+            color: #4A6A2F;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            margin-left: 6px;
+        }
+        .info-row {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin-top: 6px;
+            margin-top: 10px;
+            font-size: 0.7rem;
+            color: #7C5E3A;
         }
-        .record-details span {
-            background: #FBF5EA;
-            padding: 4px 10px;
-            border-radius: 30px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+        .progress-bar-bg {
+            background: #F0E2D4;
+            border-radius: 20px;
+            height: 6px;
+            overflow: hidden;
+            margin: 6px 0;
         }
-        .delete-btn {
-            background: #F5E0D0;
-            color: #AD6B3C;
-            border: none;
-            padding: 5px 12px;
+        .progress-fill {
+            background: #D9B48B;
+            width: 0%;
+            height: 100%;
+            border-radius: 20px;
+        }
+        .small-text {
+            font-size: 0.7rem;
+            color: #7C5E3A;
+        }
+        .btn-sm {
+            background: #E9D9CB;
+            padding: 4px 12px;
             border-radius: 30px;
             font-size: 0.7rem;
-            width: auto;
-            font-weight: 500;
+            border: none;
             cursor: pointer;
         }
-        .delete-btn:active {
-            background: #EAD0BC;
+        .claim-btn {
+            background: #E0EED7;
+            color: #4A6A2F;
         }
-        .empty-msg {
+        .reward-table {
+            background: #FEF9F0;
+            border-radius: 28px;
+            padding: 14px;
+            margin-bottom: 20px;
             text-align: center;
-            padding: 2rem;
-            color: #BC9A7A;
         }
-        .stats {
-            background: #FCF6EC;
+        .reward-items {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .reward-item {
+            background: white;
             border-radius: 24px;
-            padding: 12px 16px;
-            margin-top: 1rem;
+            padding: 8px 12px;
+            min-width: 80px;
+        }
+        .reward-amount {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #BC6F42;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 48px 20px;
+            background: #FFFBF5;
+            border-radius: 32px;
+            color: #C2A07E;
+        }
+
+        /* 模態框簡約 */
+        .modal-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(75, 55, 35, 0.4);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .modal-mask.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-container {
+            background: #FFFCF8;
+            width: 90%;
+            max-width: 520px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 24px;
+            border-radius: 40px;
+            border: 1px solid #EAD5C0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .modal-container h2 {
+            font-size: 1.4rem;
+            color: #B87C4A;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .modal-container h3 {
+            font-size: 1rem;
+            color: #A57142;
+            margin: 16px 0 8px;
+            border-left: 3px solid #EAD0B6;
+            padding-left: 10px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #9B6A42;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 28px;
+            border: 1px solid #F0DFCE;
+            background: white;
+            font-size: 0.85rem;
+        }
+        button {
+            background: #F4E8DD;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin: 16px 0;
+            justify-content: center;
+        }
+        .add-section {
+            display: flex;
+            gap: 8px;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+        .history-item, .course-item {
+            background: #FEFAF5;
+            border-radius: 24px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border: 1px solid #F5E5D6;
             display: flex;
             justify-content: space-between;
             font-size: 0.8rem;
-            font-weight: 500;
-            color: #7C5D42;
-            border: 1px solid #EDDFC7;
-        }
-        .install-guide {
-            background: #FCF3E6;
-            border-radius: 24px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-left: 6px solid #D9B48B;
-            font-size: 0.85rem;
-            color: #6E4F34;
-        }
-
-        /* 小遊戲專屬樣式 */
-        .game-area {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .bubble {
-            font-size: 5rem;
-            cursor: pointer;
-            display: inline-block;
-            transition: transform 0.1s ease;
-            user-select: none;
-            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.1));
-        }
-        .bubble:active {
-            transform: scale(0.9);
-        }
-        .game-score {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #D9B48B;
-            background: #FCF6EC;
-            display: inline-block;
-            padding: 8px 24px;
-            border-radius: 60px;
-            margin: 10px 0;
-        }
-        .game-highscore {
-            font-size: 0.9rem;
-            color: #9B7B5C;
-            margin-bottom: 12px;
-        }
-        .click-feedback {
-            position: fixed;
-            pointer-events: none;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #D9B48B;
-            text-shadow: 0 0 5px white;
-            z-index: 1000;
-            animation: floatUp 0.6s ease-out forwards;
-        }
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0px) scale(1); }
-            100% { opacity: 0; transform: translateY(-60px) scale(1.2); }
         }
         hr {
-            margin: 12px 0;
-            border-color: #EADBC5;
+            margin: 16px 0;
+            border: none;
+            border-top: 1px solid #EDE0D2;
         }
-        @media (max-width: 550px) {
-            .card { padding: 1.2rem; }
-            .flex-row { flex-direction: column; gap: 0.7rem; }
-            .record-header { flex-direction: column; align-items: flex-start; gap: 6px; }
-            .bubble { font-size: 4rem; }
+        footer {
+            text-align: center;
+            font-size: 0.65rem;
+            color: #C8AE92;
+            margin-top: 32px;
+        }
+        .search-box {
+            background: #FFFBF5;
+            border-radius: 40px;
+            padding: 4px 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #F2E5D6;
+        }
+        .search-box input {
+            border: none;
+            background: transparent;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .bottom-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #C8AE92;
+            background: none;
+            padding: 0;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: #9B6A42;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <!-- 安裝指引 -->
-    <div class="install-guide">
-        📲 <strong>安裝到手機桌面</strong> ｜ Safari/Chrome 點分享圖示 → 加入主畫面，即可像 App 使用。<br>
-        ✅ 所有資料自動儲存在本機，關閉也不會遺失。🎮 下方還有奶茶小遊戲！
+<div class="app-container">
+    <div class="header">
+        <h1>🏠 MORE 大家庭</h1>
+        <button id="globalAddBtn" style="background:#FFF2E6; border:1px solid #E2D0BD; color:#B87C4A;">+ 新增夥伴</button>
     </div>
 
-    <!-- 主要表單卡片：新增售後服務紀錄 -->
-    <div class="card">
-        <h1><span>🛠️</span> 售後服務追蹤</h1>
-        <div class="sub">記錄客戶購買與服務歷程，提升回購率</div>
+    <div class="tab-bar">
+        <button class="tab-btn active" data-tab="partners">我的夥伴們</button>
+        <button class="tab-btn" data-tab="gold">金MORE獎</button>
+        <button class="tab-btn" data-tab="family">家庭照顧</button>
+    </div>
 
-        <div class="flex-row">
-            <div class="form-group">
-                <label>📅 服務日期</label>
-                <input type="date" id="serviceDate" value="">
-            </div>
-            <div class="form-group">
-                <label>📅 原購買日期</label>
-                <input type="date" id="purchaseDate" value="">
-            </div>
+    <div id="partnersPane" class="tab-pane active-pane">
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" id="searchPartnerInput" placeholder="搜尋夥伴姓名">
+            <button id="clearSearchBtn" style="background:none; font-size:1rem;">✕</button>
         </div>
+        <div id="partnerListContainer"></div>
+    </div>
 
-        <div class="flex-row">
-            <div class="form-group">
-                <label>🧑‍🦰 客戶姓名</label>
-                <input type="text" id="customerName" placeholder="例：陳美華" autocomplete="off">
+    <div id="goldPane" class="tab-pane">
+        <div class="reward-table">
+            <div class="reward-items">
+                <div class="reward-item">三級 / 三級輔導<br><span class="reward-amount">$666</span><br>門檻10萬</div>
+                <div class="reward-item">二級<br><span class="reward-amount">$3,000</span><br>門檻30萬</div>
+                <div class="reward-item">一級<br><span class="reward-amount">$5,000</span><br>門檻90萬</div>
             </div>
-            <div class="form-group">
-                <label>📞 聯絡電話 (選填)</label>
-                <input type="tel" id="customerPhone" placeholder="手機 / 市話" autocomplete="off">
-            </div>
+            <div class="small-text" style="margin-top:8px;">年度內升級分段累計，達標即可領獎</div>
         </div>
+        <div id="goldRewardContainer"></div>
+    </div>
 
-        <div class="flex-row">
-            <div class="form-group">
-                <label>🏷️ 購買產品</label>
-                <input type="text" id="productName" placeholder="例：纖纖飲X / 爆纖錠" list="productList">
-                <datalist id="productList">
-                    <option>纖纖飲X</option><option>爆纖錠</option><option>纖飄錠</option>
-                    <option>纖酵宿</option><option>紫纖飲</option><option>肽纖飲</option>
-                    <option>厚奶茶</option><option>洗髮露</option><option>養髮液</option>
-             
+    <div id="familyPane" class="tab-pane">
+        <div id="careGameContainer"></div>
+    </div>
+
+    <footer>生日蛋糕🎂 · 每日照顧 · 保留/退出資格重算</footer>
+</div>
+
+<div id="dynamicModal" class="modal-mask">
+    <div class="modal-container">
+        <span class="modal-close">&times;</span>
+        <div id="modalContent"></div>
+    </div>
+</div>
+
+<script>
+    // ---------- 配置 ----------
+    const LEVEL_ORDER = ['皇家', '一級', '二級', '三級輔導', '三級', '實習'];
+    const ALL_LEVELS = [...LEVEL_ORDER];
+    const PARTNER_TYPES = ['自用夥伴', '經營', '保留', '退出'];
+    const PRESET_COURSES = ['絕對成交', '執行力', '領導力', '引爆生命力', '彩妝課'];
+    const REWARD_CONFIG = {
+        '三級輔導': { threshold: 100000, amount: 666 },
+        '三級': { threshold: 100000, amount: 666 },
+        '二級': { threshold: 300000, amount: 3000 },
+        '一級': { threshold: 900000, amount: 5000 }
+    };
+    const CURRENT_YEAR = 2026;
+
+    let partners = [];
+    let activeTab = 'partners';
+    let searchKeyword = '';
+
+    // 儲存
+    function save() { localStorage.setItem('partners_app_data', JSON.stringify(partners)); }
+
+    // 排序：類型權重 (自用/經營=0, 保留=1, 退出=2) + 級別 + 加盟日
+    function typeWeight(t) { return t === '自用夥伴' || t === '經營' ? 0 : (t === '保留' ? 1 : 2); }
+    function levelWeight(l) { return LEVEL_ORDER.indexOf(l); }
+    function sortPartners(list) {
+        return [...list].sort((a,b) => {
+            if (typeWeight(a.type) !== typeWeight(b.type)) return typeWeight(a.type) - typeWeight(b.type);
+            if (levelWeight(a.level) !== levelWeight(b.level)) return levelWeight(a.level) - levelWeight(b.level);
+            return (a.joinDate || '').localeCompare(b.joinDate || '') * -1;
+        });
+    }
+
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[m])); }
+    function isBirthdayToday(bd) { if(!bd) return false; const t=new Date(), b=new Date(bd); return t.getMonth()===b.getMonth() && t.getDate()===b.getDate(); }
+
+    // 有效加盟月數 (用於半年/一年資格，不顯示給用戶)
+    function effectiveMonths(p) {
+        const date = p.effectiveJoinDate || p.joinDate;
+        if(!date) return 0;
+        const start = new Date(date), now = new Date();
+        let months = (now.getFullYear()-start.getFullYear())*12 + (now.getMonth()-start.getMonth());
+        if(now.getDate() < start.getDate()) months--;
+        return Math.max(0, months);
+    }
+    function getQualifyBadge(p) {
+        if(p.type !== '自用夥伴' && p.type !== '經營') return null;
+        const m = effectiveMonths(p);
+        if(m >= 12) return '滿一年｜免費金MORE+中秋禮物';
+        if(m >= 6) return '滿半年｜半額金MORE';
+        return null;
+    }
+
+    // 類型變更時重算有效加盟日 (內部使用，不顯示)
+    function updateEffectiveDate(p, oldType, newType) {
+        const wasActive = (oldType === '自用夥伴' || oldType === '經營');
+        const isActive = (newType === '自用夥伴' || newType === '經營');
+        if(!wasActive && isActive) p.effectiveJoinDate = new Date().toISOString().slice(0,10);
+        if(!p.effectiveJoinDate) p.effectiveJoinDate = p.joinDate;
+    }
+
+    // 升降級分段 (過濾保留/退出事件)
+    function getSegments(p, year) {
+        const histories = (p.levelHistory || []).filter(h => LEVEL_ORDER.includes(h.level));
+        const filtered = histories.filter(h => h.date && h.date.startsWith(year)).sort((a,b)=>a.date.localeCompare(b.date));
+        let startLevel = p.level;
+        const before = histories.filter(h => h.date < `${year}-01-01`).sort((a,b)=>b.date.localeCompare(a.date));
+        if(before.length) startLevel = before[0].level;
+        let segs = [], cur = startLevel, last = `${year}-01-01`;
+        for(let r of filtered) {
+            if(r.date > last) segs.push({ level: cur, start: last, end: r.date });
+            cur = r.level;
+            last = r.date;
+        }
+        segs.push({ level: cur, start: last, end: `${year}-12-31` });
+        return segs;
+    }
+    function calcLevelSales(p, year) {
+        const monthly = p.annualData?.[year]?.monthlySales || new Array(12).fill(0);
+        const segs = getSegments(p, year);
+        let sales = { '三級輔導':0, '三級':0, '二級':0, '一級':0 };
+        for(let s of segs) {
+            if(!REWARD_CONFIG[s.level]) continue;
+            let sm = new Date(s.start).getMonth(), em = new Date(s.end).getMonth();
+            if(s.start.slice(0,4) < year) sm = 0;
+            if(s.end.slice(0,4) > year) em = 11;
+            for(let m=sm; m<=em; m++) sales[s.level] += monthly[m] || 0;
+        }
+        return sales;
+    }
+    function getRewardStatus(p, year) {
+        const sales = calcLevelSales(p, year);
+        const claimed = p.annualData?.[year]?.claimedRewards || {};
+        return Object.entries(REWARD_CONFIG).map(([lvl,cfg]) => ({
+            level: lvl, threshold: cfg.threshold, amount: cfg.amount,
+            sales: sales[lvl] || 0, isQualified: (sales[lvl]||0) >= cfg.threshold,
+            isClaimed: claimed[lvl] || false
+        }));
+    }
+
+    function claimReward(pid, lvl) {
+        const p = partners.find(p=>p.id===pid);
+        if(!p) return;
+        const status = getRewardStatus(p, CURRENT_YEAR).find(r=>r.level===lvl);
+        if(status?.isQualified && !status.isClaimed) {
+            if(!p.annualData) p.annualData = {};
+            if(!p.annualData[CURRENT_YEAR]) p.annualData[CURRENT_YEAR] = { monthlySales: new Array(12).fill(0), claimedRewards: {} };
+            p.annualData[CURRENT_YEAR].claimedRewards[lvl] = true;
+            save();
+            alert(`已領取 ${lvl} 獎金 $${status.amount.toLocaleString()} 元`);
+            renderGoldPage();
+        } else alert("尚未符合領獎資格或已領取過");
+    }
+
+    // 編輯每月業績
+    function editMonthly(pid) {
+        const p = partners.find(p=>p.id===pid);
+        if(!p) return;
+        if(!p.annualData) p.annualData = {};
+        if(!p.annualData[CURRENT_YEAR]) p.annualData[CURRENT_YEAR] = { monthlySales: new Array(12).fill(0), claimedRewards: {} };
+        const monthly = p.annualData[CURRENT_YEAR].monthlySales;
+        let html = `<h3>${p.name} - ${CURRENT_YEAR} 每月補貨 (元)</h3><div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;">`;
+        const months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+        for(let i=0;i<12;i++) html += `<div><label>${months[i]}</label><input type="number" id="m${i}" value="${monthly[i]||0}" step="1000"></div>`;
+        html += `</div><div class="btn-group"><button id="saveMonthBtn">儲存</button><button id="cancelMonthBtn">取消</button></div>`;
+        const modal = document.getElementById('dynamicModal'), modalC = document.getElementById('modalContent');
+        modalC.innerHTML = html;
+        modal.classList.add('active');
+        document.getElementById('saveMonthBtn').onclick = () => {
+            for(let i=0;i<12;i++) monthly[i] = parseInt(document.getElementById(`m${i}`).value) || 0;
+            save();
+            modal.classList.remove('active');
+            renderGoldPage();
+            if(activeTab === 'partners') renderPartnerList();
+        };
+        document.getElementById('cancelMonthBtn').onclick = () => modal.classList.remove('active');
+    }
+
+    // 金MORE頁面
+    function renderGoldPage() {
+        const container = document.getElementById('goldRewardContainer');
+        if(!container) return;
+        const valid = partners.filter(p => (p.type==='自用夥伴'||p.type==='經營') && p.level!=='皇家' && p.level!=='實習');
+        if(!valid.length) { container.innerHTML = `<div class="empty-state">✨ 無符合獎金資格夥伴 ✨</div>`; return; }
+        let html = '';
+        for(let p of sortPartners(valid)) {
+            const rewards = getRewardStatus(p, CURRENT_YEAR);
+            const current = p.level;
+            const cfg = REWARD_CONFIG[current];
+            const sales = cfg ? (calcLevelSales(p, CURRENT_YEAR)[current]||0) : 0;
+            const progress = cfg ? Math.min(100, (sales/cfg.threshold)*100) : 0;
+            const remaining = cfg ? Math.max(0, cfg.threshold - sales) : 0;
+            const hasClaimable = rewards.some(r=>r.isQualified && !r.isClaimed);
+            const badge = getQualifyBadge(p);
+            html += `<div class="card" data-id="${p.id}" style="cursor:pointer;">
+                <div class="flex-between">
+                    <div><span class="level-badge">${p.level}</span> <strong>${escapeHtml(p.name)}</strong> ${hasClaimable ? '👑' : ''} ${badge ? `<span class="qualify-badge">${badge}</span>` : ''}</div>
+                    <button class="btn-sm" onclick="event.stopPropagation(); editMonthly('${p.id}')">📝 業績</button>
+                </div>
+                ${cfg ? `<div class="progress-bar-bg"><div class="progress-fill" style="width:${progress}%"></div></div>
+                <div class="small-text flex-between"><span>${current} 門檻 ${cfg.threshold.toLocaleString()}</span><span>累積 ${sales.toLocaleString()} ${remaining>0 ? `(差 ${remaining.toLocaleString()})` : '✅達標'}</span></div>` : `<div class="small-text">⭐ ${current} 無年度獎金，可領取升級前獎勵</div>`}
+                ${rewards.filter(r=>r.isQualified && !r.isClaimed).map(r=>`<div class="flex-between" style="margin-top:8px;"><span>${r.level} 獎金 $${r.amount.toLocaleString()}</span><button class="btn-sm claim-btn" onclick="event.stopPropagation(); claimReward('${p.id}','${r.level}')">領取</button></div>`).join('')}
+            </div>`;
+        }
+        container.innerHTML = html;
+        document.querySelectorAll('#goldRewardContainer .card').forEach(c => c.addEventListener('click', (e) => { if(e.target.tagName!=='BUTTON') editMonthly(c.dataset.id); }));
+    }
+
+    // 夥伴列表 (不顯示有效日)
+    function renderPartnerList() {
+        const container = document.getElementById('partnerListContainer');
+        let filtered = partners.filter(p => p.name.toLowerCase().includes(searchKeyword.toLowerCase()));
+        const sorted = sortPartners(filtered);
+        if(!sorted.length) { container.innerHTML = `<div class="empty-state">✨ 沒有夥伴 ✨</div>`; return; }
+        let html = '';
+        for(let p of sorted) {
+            const cake = isBirthdayToday(p.birthday) ? '🎂' : '';
+            const badge = getQualifyBadge(p);
+            html += `<div class="card" data-id="${p.id}">
+                <div class="flex-between">
+                    <div><span class="level-badge">${p.level}</span> <strong>${escapeHtml(p.name)}</strong> ${cake} <span class="status-badge">${p.type}</span> ${badge ? `<span class="qualify-badge">${badge}</span>` : ''}</div>
+                </div>
+                <div class="info-row">
+                    <span>📅 加盟 ${p.joinDate?.slice(0,7) || '?'}</span>
+                    <span>📍 ${escapeHtml(p.location) || '未填'}</span>
+                    <span>🎂 ${p.birthday || '無'}</span>
+                </div>
+            </div>`;
+        }
+        container.innerHTML = html;
+        document.querySelectorAll('#partnerListContainer .card').forEach(c => c.addEventListener('click', () => openDetailModal(c.dataset.id)));
+    }
+
+    // 家庭照顧
+    function renderFamily() {
+        const container = document.getElementById('careGameContainer');
+        if(!partners.length) { container.innerHTML = '<div class="empty-state">👶 還沒有家庭成員</div>'; return; }
+        const today = new Date().toISOString().slice(0,10);
+        let html = '';
+        for(let p of partners) {
+            const can = (p.lastCareDate !== today);
+            html += `<div class="card">
+                <div class="flex-between"><strong>${escapeHtml(p.name)}</strong> <span class="level-badge">${p.level}</span> ${isBirthdayToday(p.birthday)?'🎂':''} <span class="status-badge">${p.type}</span></div>
+                <div>親密度 ${p.intimacy||0}/100</div>
+                <div class="progress-bar-bg"><div class="progress-fill" style="width:${p.intimacy||0}%"></div></div>
+                <div class="small-text">${p.lastCareDate ? `上次照顧 ${p.lastCareDate}` : '尚未照顧'}</div>
+                <button class="btn-sm" data-id="${p.id}" style="margin-top:8px;" ${!can ? 'disabled' : ''}>${can ? '🤝 今天照顧' : '✅ 今日已照顧'}</button>
+            </div>`;
+        }
+        container.innerHTML = html;
+        document.querySelectorAll('.btn-sm[data-id]').forEach(btn => {
+            if(!btn.disabled) btn.onclick = () => carePartner(btn.dataset.id);
+        });
+    }
+    function carePartner(pid) {
+        const p = partners.find(p=>p.id===pid);
+        if(!p) return;
+        const today = new Date().toISOString().slice(0,10);
+        if(p.lastCareDate === today) { alert('今天已照顧過'); return; }
+        p.intimacy = Math.min(100, (p.intimacy||0)+5);
+        p.lastCareDate = today;
+        save();
+        if(activeTab === 'family') renderFamily();
+        else renderPartnerList();
+        alert(`陪伴 ${p.name}，親密度+5`);
+    }
+
+    // 詳情模態 (僅右上角叉叉關閉，無底部關閉按鈕)
+    function openDetailModal(id) {
+        const p = partners.find(p=>p.id===id);
+        if(!p) return;
+        const levelOpts = ALL_LEVELS.map(l => `<option ${p.level===l?'selected':''}>${l}</option>`).join('');
+        const typeOpts = PARTNER_TYPES.map(t => `<option ${p.type===t?'selected':''}>${t}</option>`).join('');
+        const historyHtml = (p.levelHistory||[]).slice().reverse().map(h => `<div class="history-item"><span><strong>${h.level}</strong> ${h.date}</span><span>${h.awardReceived ? '已領獎' : ''}</span></div>`).join('');
+        const coursesHtml = (p.courses||[]).map(c => `<div class="course-item">📘 ${c.name} ${c.date}</div>`).join('');
+        const levelSelectWithStatus = `<select id="newLevelSel">${ALL_LEVELS.map(l=>`<option>${l}</option>`).join('')}<option value="保留">保留</option><option value="退出">退出</option></select>`;
+        const content = `
+            <h2>✏️ ${escapeHtml(p.name)}</h2>
+            <div class="form-group"><label>姓名</label><input id="editName" value="${escapeHtml(p.name)}"></div>
+            <div class="form-group"><label>生日</label><input type="date" id="editBirth" value="${p.birthday||''}"></div>
+            <div class="form-group"><label>級別</label><select id="editLevel">${levelOpts}</select></div>
+            <div class="form-group"><label>類型</label><select id="editType">${typeOpts}</select></div>
+            <div class="form-group"><label>加盟日</label><input type="date" id="editJoin" value="${p.joinDate||''}"></div>
+            <div class="form-group"><label>居住地</label><input id="editLoc" value="${escapeHtml(p.location||'')}"></div>
+            <hr>
+            <h3>升降級紀錄</h3>
+            <div id="historyArea">${historyHtml || '<div class="small-text">無</div>'}</div>
+            <div class="add-section">${levelSelectWithStatus}<input type="date" id="newDate"><button id="addHistoryBtn" class="btn-sm">新增</button></div>
+            <hr>
+            <h3>課程紀錄</h3>
+            <div id="courseArea">${coursesHtml || '<div class="small-text">無</div>'}</div>
+            <div class="add-section"><select id="courseSel"><option value="">選擇課程</option>${PRESET_COURSES.map(c=>`<option>${c}</option>`).join('')}</select><input type="date" id="courseDate"><button id="addCourseBtn" class="btn-sm">新增</button></div>
+            <div class="bottom-buttons">
+                <button id="saveBtn">💾 儲存</button>
+                <button id="delBtn" style="background:#F3DFD4;">🗑️ 刪除</button>
+            </div>
+        `;
+        const modal = document.getElementById('dynamicModal'), modalC = document.getElementById('modalContent');
+        modalC.innerHTML = content;
+        modal.classList.add('active');
+        document.getElementById('saveBtn').onclick = () => {
+            const oldType = p.type, newType = document.getElementById('editType').value;
+            p.name = document.getElementById('editName').value;
+            p.birthday = document.getElementById('editBirth').value;
+            const newLv = document.getElementById('editLevel').value;
+            if(p.level !== newLv) { p.levelHistory.push({level:newLv, date:new Date().toISOString().slice(0,10), awardReceived:false}); p.level = newLv; }
+            p.type = newType;
+            p.joinDate = document.getElementById('editJoin').value;
+            p.location = document.getElementById('editLoc').value;
+            updateEffectiveDate(p, oldType, newType);
+            if(!p.effectiveJoinDate) p.effectiveJoinDate = p.joinDate;
+            save();
+            openDetailModal(p.id);
+        };
+        document.getElementById('delBtn').onclick = () => { if(confirm('刪除此夥伴？')){ partners=partners.filter(x=>x.id!==p.id); save(); closeModal(); refreshAll(); } };
+        document.getElementById('addHistoryBtn').onclick = () => {
+            const val = document.getElementById('newLevelSel').value;
+            const dt = document.getElementById('newDate').value;
+            if(!dt) { alert("請選日期"); return; }
+            if(val === '保留' || val === '退出') {
+                p.levelHistory.push({level:val, date:dt, awardReceived:false});
+                const oldType = p.type, newType = val;
+                if(oldType !== newType) { p.type = newType; updateEffectiveDate(p, oldType, newType); }
+                save();
+                openDetailModal(p.id);
+            } else {
+                p.levelHistory.push({level:val, date:dt, awardReceived:false});
+                p.level = val;
+                save();
+                openDetailModal(p.id);
+            }
+        };
+        document.getElementById('addCourseBtn').onclick = () => {
+            const cn = document.getElementById('courseSel').value;
+            const cd = document.getElementById('courseDate').value;
+            if(cn && cd) { p.courses.push({name:cn, date:cd}); save(); openDetailModal(p.id); }
+        };
+    }
+
+    function closeModal() { document.getElementById('dynamicModal').classList.remove('active'); }
+    function refreshAll() {
+        if(activeTab === 'partners') renderPartnerList();
+        else if(activeTab === 'gold') renderGoldPage();
+        else renderFamily();
+    }
+
+    // 新增夥伴
+    function openAddModal() {
+        const content = `<h2>新增夥伴</h2>
+            <div class="form-group"><label>姓名 *</label><input id="newName"></div>
+            <div class="form-group"><label>生日</label><input type="date" id="newBirth"></div>
+            <div class="form-group"><label>級別</label><select id="newLevel">${ALL_LEVELS.map(l=>`<option>${l}</option>`).join('')}</select></div>
+            <div class="form-group"><label>類型</label><select id="newType">${PARTNER_TYPES.map(t=>`<option>${t}</option>`).join('')}</select></div>
+            <div class="form-group"><label>加盟日</label><input type="date" id="newJoin"></div>
+            <div class="form-group"><label>居住地</label><input id="newLoc"></div>
+            <div class="btn-group"><button id="confirmAdd">建立</button><button id="cancelAdd">取消</button></div>`;
+        const modal = document.getElementById('dynamicModal'), modalC = document.getElementById('modalContent');
+        modalC.innerHTML = content;
+        modal.classList.add('active');
+        document.getElementById('confirmAdd').onclick = () => {
+            const name = document.getElementById('newName').value.trim();
+            if(!name) return;
+            const join = document.getElementById('newJoin').value || new Date().toISOString().slice(0,10);
+            const newType = document.getElementById('newType').value;
+            const newP = {
+                id: Date.now()+'-'+Math.random(),
+                name, birthday: document.getElementById('newBirth').value,
+                level: document.getElementById('newLevel').value,
+                type: newType, joinDate: join,
+                location: document.getElementById('newLoc').value,
+                levelHistory: [], courses: [], intimacy: 0, lastCareDate: null, annualData: {}
+            };
+            newP.levelHistory.push({level:newP.level, date:join, awardReceived:false});
+            if(newType === '自用夥伴' || newType === '經營') newP.effectiveJoinDate = join;
+            else newP.effectiveJoinDate = null;
+            partners.push(newP);
+            save();
+            closeModal();
+            refreshAll();
+        };
+        document.getElementById('cancelAdd').onclick = closeModal;
+    }
+
+    // 切換分頁
+    function switchTab(tab) {
+        activeTab = tab;
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active-pane'));
+        document.getElementById(`${tab}Pane`).classList.add('active-pane');
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
+        if(tab === 'partners') renderPartnerList();
+        else if(tab === 'gold') renderGoldPage();
+        else renderFamily();
+    }
+
+    // 載入資料
+    function loadData() {
+        const stored = localStorage.getItem('partners_app_data');
+        if(stored) {
+            partners = JSON.parse(stored);
+            partners.forEach(p => {
+                if(!p.levelHistory) p.levelHistory = [];
+                if(!p.courses) p.courses = [];
+                p.levelHistory.forEach(h => { if(h.awardReceived===undefined) h.awardReceived=false; });
+                if(!p.annualData) p.annualData = {};
+                if(p.intimacy === undefined) p.intimacy = 0;
+                if(p.lastCareDate === undefined) p.lastCareDate = null;
+                if(p.effectiveJoinDate === undefined) p.effectiveJoinDate = (p.type==='自用夥伴'||p.type==='經營') ? p.joinDate : null;
+            });
+            save();
+        } else {
+            partners = [
+                { id:'1', name:'林芳儀', birthday:'1995-03-21', level:'一級', type:'經營', joinDate:'2023-05-10', location:'台北市', intimacy:32, lastCareDate:'2026-04-14', effectiveJoinDate:'2023-05-10', levelHistory:[{level:'實習',date:'2023-05-10',awardReceived:true},{level:'三級',date:'2023-09-15',awardReceived:false},{level:'一級',date:'2024-02-20',awardReceived:false}], courses:[{name:'領導力',date:'2023-11-12'}], annualData:{} },
+                { id:'2', name:'陳冠宇', birthday:'1990-04-15', level:'皇家', type:'自用夥伴', joinDate:'2022-11-20', location:'台中市', intimacy:78, lastCareDate:'2026-04-15', effectiveJoinDate:'2022-11-20', levelHistory:[{level:'實習',date:'2022-11-20',awardReceived:true},{level:'二級',date:'2023-06-01',awardReceived:true},{level:'皇家',date:'2024-01-10',awardReceived:false}], courses:[], annualData:{} },
+                { id:'3', name:'張子晴', birthday:'2000-05-10', level:'三級輔導', type:'經營', joinDate:'2024-01-15', location:'高雄市', intimacy:15, lastCareDate:'2026-04-10', effectiveJoinDate:'2024-01-15', levelHistory:[{level:'實習',date:'2024-01-15',awardReceived:true},{level:'三級輔導',date:'2024-08-01',awardReceived:false}], courses:[], annualData:{} }
+            ];
+            save();
+        }
+    }
+
+    // 全域關閉按鈕 (右上角叉叉)
+    document.querySelector('.modal-close')?.addEventListener('click', closeModal);
+    // 點擊遮罩關閉
+    document.getElementById('dynamicModal')?.addEventListener('click', (e) => {
+        if(e.target.classList.contains('modal-mask')) closeModal();
+    });
+
+    // 搜尋
+    const searchInput = document.querySelector('#searchPartnerInput');
+    if(searchInput) searchInput.addEventListener('input', e => { searchKeyword = e.target.value; renderPartnerList(); });
+    document.getElementById('clearSearchBtn')?.addEventListener('click', () => { if(searchInput) searchInput.value=''; searchKeyword=''; renderPartnerList(); });
+    document.getElementById('globalAddBtn')?.addEventListener('click', openAddModal);
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+    window.editMonthly = editMonthly;
+    window.claimReward = claimReward;
+
+    loadData();
+    switchTab('partners');
+</script>
+</body>
+</html>
