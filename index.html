@@ -13,10 +13,10 @@
         }
 
         body {
-            background-color: #F9F0E3;
+            background-color: #FFFFFF;
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
             padding: 20px 16px 40px;
-            color: #4A3525;
+            color: #333;
         }
 
         .app-container {
@@ -31,7 +31,7 @@
             margin-bottom: 20px;
             flex-wrap: wrap;
             gap: 10px;
-            border-bottom: 2px solid #EADBC6;
+            border-bottom: 2px solid #F0E4D4;
             padding-bottom: 12px;
         }
         h1 {
@@ -43,7 +43,7 @@
             display: flex;
             gap: 12px;
             margin-bottom: 24px;
-            background: #F3E9DE;
+            background: #F8F4EF;
             padding: 6px;
             border-radius: 60px;
         }
@@ -60,7 +60,7 @@
             cursor: pointer;
         }
         .tab-btn.active {
-            background: #FFF7EF;
+            background: #FFFFFF;
             color: #B87C4A;
             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
             border: 1px solid #EADBC6;
@@ -77,33 +77,62 @@
             to { opacity: 1; transform: translateY(0);}
         }
 
-        /* 卡片簡約 */
+        /* 卡片基礎 */
         .card {
-            background: #FFFBF5;
+            background: #FFFFFF;
             border-radius: 28px;
             padding: 16px 20px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-            border: 1px solid #F2E5D6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border: 1px solid #F0E4D4;
             margin-bottom: 14px;
             cursor: pointer;
             transition: 0.1s;
         }
         .card:active {
-            background: #FEF6EC;
+            background: #FEFAF5;
         }
         .flex-between {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        /* 級別不同顏色框 */
         .level-badge {
-            background: #F4EADF;
-            padding: 3px 12px;
+            display: inline-block;
+            padding: 4px 12px;
             border-radius: 40px;
             font-size: 0.7rem;
-            font-weight: 500;
-            color: #9B6A42;
+            font-weight: 600;
+            background: #F4EADF;
+            color: #5E3A1F;
         }
+        .level-royal {
+            background: #F9E5A8;
+            color: #9B6A00;
+            border: 1px solid #E6C878;
+        }
+        .level-1 {
+            background: #E9DFF7;
+            color: #6B4E8A;
+            border: 1px solid #D1C2E3;
+        }
+        /* 二級改粉色 */
+        .level-2 {
+            background: #FDE2E4;   /* 淡粉色 */
+            color: #B3445C;        /* 深粉色文字 */
+            border: 1px solid #F8B5B8;
+        }
+        .level-3, .level-3-mentor {
+            background: #D6F0ED;
+            color: #1F6E6A;
+            border: 1px solid #A9D9D4;
+        }
+        .level-intern {
+            background: #D9E9F7;
+            color: #2A5F8A;
+            border: 1px solid #B9D3F0;
+        }
+
         .status-badge {
             background: #F3E9DE;
             border-radius: 30px;
@@ -119,6 +148,9 @@
             border-radius: 30px;
             font-size: 0.65rem;
             margin-left: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
         .info-row {
             display: flex;
@@ -175,6 +207,7 @@
             border-radius: 24px;
             padding: 8px 12px;
             min-width: 80px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
         .reward-amount {
             font-size: 1rem;
@@ -184,19 +217,20 @@
         .empty-state {
             text-align: center;
             padding: 48px 20px;
-            background: #FFFBF5;
+            background: #FFFFFF;
             border-radius: 32px;
             color: #C2A07E;
+            border: 1px solid #F0E4D4;
         }
 
-        /* 模態框簡約 */
+        /* 模態框 */
         .modal-mask {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(75, 55, 35, 0.4);
+            background-color: rgba(0,0,0,0.4);
             backdrop-filter: blur(2px);
             display: flex;
             align-items: center;
@@ -211,7 +245,7 @@
             opacity: 1;
         }
         .modal-container {
-            background: #FFFCF8;
+            background: #FFFFFF;
             width: 90%;
             max-width: 520px;
             max-height: 85vh;
@@ -291,19 +325,20 @@
         }
         footer {
             text-align: center;
-            font-size: 0.65rem;
-            color: #C8AE92;
+            font-size: 0.7rem;
+            color: #B88A5A;
             margin-top: 32px;
+            font-weight: 500;
         }
         .search-box {
-            background: #FFFBF5;
+            background: #FEFAF5;
             border-radius: 40px;
             padding: 4px 16px;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 8px;
-            border: 1px solid #F2E5D6;
+            border: 1px solid #F0E4D4;
         }
         .search-box input {
             border: none;
@@ -331,6 +366,16 @@
         }
         .modal-close:hover {
             color: #9B6A42;
+        }
+        .qualify-icon {
+            background: #E0EED7;
+            border-radius: 30px;
+            padding: 2px 8px;
+            font-size: 0.65rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -372,7 +417,7 @@
         <div id="careGameContainer"></div>
     </div>
 
-    <footer>生日蛋糕🎂 · 每日照顧 · 保留/退出資格重算</footer>
+    <footer>培訓做得好 事業沒煩惱</footer>
 </div>
 
 <div id="dynamicModal" class="modal-mask">
@@ -386,7 +431,7 @@
     // ---------- 配置 ----------
     const LEVEL_ORDER = ['皇家', '一級', '二級', '三級輔導', '三級', '實習'];
     const ALL_LEVELS = [...LEVEL_ORDER];
-    const PARTNER_TYPES = ['自用夥伴', '經營', '保留', '退出'];
+    const PARTNER_TYPES = ['自用', '經營', '保留', '退出'];
     const PRESET_COURSES = ['絕對成交', '執行力', '領導力', '引爆生命力', '彩妝課'];
     const REWARD_CONFIG = {
         '三級輔導': { threshold: 100000, amount: 666 },
@@ -400,11 +445,9 @@
     let activeTab = 'partners';
     let searchKeyword = '';
 
-    // 儲存
     function save() { localStorage.setItem('partners_app_data', JSON.stringify(partners)); }
 
-    // 排序：類型權重 (自用/經營=0, 保留=1, 退出=2) + 級別 + 加盟日
-    function typeWeight(t) { return t === '自用夥伴' || t === '經營' ? 0 : (t === '保留' ? 1 : 2); }
+    function typeWeight(t) { return t === '自用' || t === '經營' ? 0 : (t === '保留' ? 1 : 2); }
     function levelWeight(l) { return LEVEL_ORDER.indexOf(l); }
     function sortPartners(list) {
         return [...list].sort((a,b) => {
@@ -417,7 +460,6 @@
     function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[m])); }
     function isBirthdayToday(bd) { if(!bd) return false; const t=new Date(), b=new Date(bd); return t.getMonth()===b.getMonth() && t.getDate()===b.getDate(); }
 
-    // 有效加盟月數 (用於半年/一年資格，不顯示給用戶)
     function effectiveMonths(p) {
         const date = p.effectiveJoinDate || p.joinDate;
         if(!date) return 0;
@@ -427,22 +469,20 @@
         return Math.max(0, months);
     }
     function getQualifyBadge(p) {
-        if(p.type !== '自用夥伴' && p.type !== '經營') return null;
+        if(p.type !== '自用' && p.type !== '經營') return null;
         const m = effectiveMonths(p);
-        if(m >= 12) return '滿一年｜免費金MORE+中秋禮物';
-        if(m >= 6) return '滿半年｜半額金MORE';
+        if(m >= 12) return '🎁 滿一年';
+        if(m >= 6) return '🌙 滿半年｜半額金MORE';
         return null;
     }
 
-    // 類型變更時重算有效加盟日 (內部使用，不顯示)
     function updateEffectiveDate(p, oldType, newType) {
-        const wasActive = (oldType === '自用夥伴' || oldType === '經營');
-        const isActive = (newType === '自用夥伴' || newType === '經營');
+        const wasActive = (oldType === '自用' || oldType === '經營');
+        const isActive = (newType === '自用' || newType === '經營');
         if(!wasActive && isActive) p.effectiveJoinDate = new Date().toISOString().slice(0,10);
         if(!p.effectiveJoinDate) p.effectiveJoinDate = p.joinDate;
     }
 
-    // 升降級分段 (過濾保留/退出事件)
     function getSegments(p, year) {
         const histories = (p.levelHistory || []).filter(h => LEVEL_ORDER.includes(h.level));
         const filtered = histories.filter(h => h.date && h.date.startsWith(year)).sort((a,b)=>a.date.localeCompare(b.date));
@@ -495,7 +535,6 @@
         } else alert("尚未符合領獎資格或已領取過");
     }
 
-    // 編輯每月業績
     function editMonthly(pid) {
         const p = partners.find(p=>p.id===pid);
         if(!p) return;
@@ -519,11 +558,10 @@
         document.getElementById('cancelMonthBtn').onclick = () => modal.classList.remove('active');
     }
 
-    // 金MORE頁面
     function renderGoldPage() {
         const container = document.getElementById('goldRewardContainer');
         if(!container) return;
-        const valid = partners.filter(p => (p.type==='自用夥伴'||p.type==='經營') && p.level!=='皇家' && p.level!=='實習');
+        const valid = partners.filter(p => (p.type==='自用'||p.type==='經營') && p.level!=='皇家' && p.level!=='實習');
         if(!valid.length) { container.innerHTML = `<div class="empty-state">✨ 無符合獎金資格夥伴 ✨</div>`; return; }
         let html = '';
         for(let p of sortPartners(valid)) {
@@ -535,9 +573,20 @@
             const remaining = cfg ? Math.max(0, cfg.threshold - sales) : 0;
             const hasClaimable = rewards.some(r=>r.isQualified && !r.isClaimed);
             const badge = getQualifyBadge(p);
+            let levelClass = '';
+            if(p.level === '皇家') levelClass = 'level-royal';
+            else if(p.level === '一級') levelClass = 'level-1';
+            else if(p.level === '二級') levelClass = 'level-2';
+            else if(p.level === '三級輔導' || p.level === '三級') levelClass = 'level-3';
+            else if(p.level === '實習') levelClass = 'level-intern';
             html += `<div class="card" data-id="${p.id}" style="cursor:pointer;">
                 <div class="flex-between">
-                    <div><span class="level-badge">${p.level}</span> <strong>${escapeHtml(p.name)}</strong> ${hasClaimable ? '👑' : ''} ${badge ? `<span class="qualify-badge">${badge}</span>` : ''}</div>
+                    <div>
+                        <span class="level-badge ${levelClass}">${p.level}</span>
+                        <strong> ${escapeHtml(p.name)}</strong>
+                        ${hasClaimable ? '<span style="margin-left:4px;">👑</span>' : ''}
+                        ${badge ? `<span class="qualify-badge" style="margin-left:6px;">${badge}</span>` : ''}
+                    </div>
                     <button class="btn-sm" onclick="event.stopPropagation(); editMonthly('${p.id}')">📝 業績</button>
                 </div>
                 ${cfg ? `<div class="progress-bar-bg"><div class="progress-fill" style="width:${progress}%"></div></div>
@@ -549,7 +598,6 @@
         document.querySelectorAll('#goldRewardContainer .card').forEach(c => c.addEventListener('click', (e) => { if(e.target.tagName!=='BUTTON') editMonthly(c.dataset.id); }));
     }
 
-    // 夥伴列表 (不顯示有效日)
     function renderPartnerList() {
         const container = document.getElementById('partnerListContainer');
         let filtered = partners.filter(p => p.name.toLowerCase().includes(searchKeyword.toLowerCase()));
@@ -559,9 +607,20 @@
         for(let p of sorted) {
             const cake = isBirthdayToday(p.birthday) ? '🎂' : '';
             const badge = getQualifyBadge(p);
+            let levelClass = '';
+            if(p.level === '皇家') levelClass = 'level-royal';
+            else if(p.level === '一級') levelClass = 'level-1';
+            else if(p.level === '二級') levelClass = 'level-2';
+            else if(p.level === '三級輔導' || p.level === '三級') levelClass = 'level-3';
+            else if(p.level === '實習') levelClass = 'level-intern';
             html += `<div class="card" data-id="${p.id}">
                 <div class="flex-between">
-                    <div><span class="level-badge">${p.level}</span> <strong>${escapeHtml(p.name)}</strong> ${cake} <span class="status-badge">${p.type}</span> ${badge ? `<span class="qualify-badge">${badge}</span>` : ''}</div>
+                    <div>
+                        <span class="level-badge ${levelClass}">${p.level}</span>
+                        <strong> ${escapeHtml(p.name)}</strong> ${cake}
+                        <span class="status-badge">${p.type}</span>
+                        ${badge ? `<span class="qualify-badge" style="margin-left:6px;">${badge}</span>` : ''}
+                    </div>
                 </div>
                 <div class="info-row">
                     <span>📅 加盟 ${p.joinDate?.slice(0,7) || '?'}</span>
@@ -574,7 +633,6 @@
         document.querySelectorAll('#partnerListContainer .card').forEach(c => c.addEventListener('click', () => openDetailModal(c.dataset.id)));
     }
 
-    // 家庭照顧
     function renderFamily() {
         const container = document.getElementById('careGameContainer');
         if(!partners.length) { container.innerHTML = '<div class="empty-state">👶 還沒有家庭成員</div>'; return; }
@@ -582,8 +640,14 @@
         let html = '';
         for(let p of partners) {
             const can = (p.lastCareDate !== today);
+            let levelClass = '';
+            if(p.level === '皇家') levelClass = 'level-royal';
+            else if(p.level === '一級') levelClass = 'level-1';
+            else if(p.level === '二級') levelClass = 'level-2';
+            else if(p.level === '三級輔導' || p.level === '三級') levelClass = 'level-3';
+            else if(p.level === '實習') levelClass = 'level-intern';
             html += `<div class="card">
-                <div class="flex-between"><strong>${escapeHtml(p.name)}</strong> <span class="level-badge">${p.level}</span> ${isBirthdayToday(p.birthday)?'🎂':''} <span class="status-badge">${p.type}</span></div>
+                <div class="flex-between"><strong>${escapeHtml(p.name)}</strong> <span class="level-badge ${levelClass}">${p.level}</span> ${isBirthdayToday(p.birthday)?'🎂':''} <span class="status-badge">${p.type}</span></div>
                 <div>親密度 ${p.intimacy||0}/100</div>
                 <div class="progress-bar-bg"><div class="progress-fill" style="width:${p.intimacy||0}%"></div></div>
                 <div class="small-text">${p.lastCareDate ? `上次照顧 ${p.lastCareDate}` : '尚未照顧'}</div>
@@ -608,7 +672,6 @@
         alert(`陪伴 ${p.name}，親密度+5`);
     }
 
-    // 詳情模態 (僅右上角叉叉關閉，無底部關閉按鈕)
     function openDetailModal(id) {
         const p = partners.find(p=>p.id===id);
         if(!p) return;
@@ -687,7 +750,6 @@
         else renderFamily();
     }
 
-    // 新增夥伴
     function openAddModal() {
         const content = `<h2>新增夥伴</h2>
             <div class="form-group"><label>姓名 *</label><input id="newName"></div>
@@ -714,7 +776,7 @@
                 levelHistory: [], courses: [], intimacy: 0, lastCareDate: null, annualData: {}
             };
             newP.levelHistory.push({level:newP.level, date:join, awardReceived:false});
-            if(newType === '自用夥伴' || newType === '經營') newP.effectiveJoinDate = join;
+            if(newType === '自用' || newType === '經營') newP.effectiveJoinDate = join;
             else newP.effectiveJoinDate = null;
             partners.push(newP);
             save();
@@ -724,7 +786,6 @@
         document.getElementById('cancelAdd').onclick = closeModal;
     }
 
-    // 切換分頁
     function switchTab(tab) {
         activeTab = tab;
         document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active-pane'));
@@ -735,7 +796,6 @@
         else renderFamily();
     }
 
-    // 載入資料
     function loadData() {
         const stored = localStorage.getItem('partners_app_data');
         if(stored) {
@@ -747,27 +807,25 @@
                 if(!p.annualData) p.annualData = {};
                 if(p.intimacy === undefined) p.intimacy = 0;
                 if(p.lastCareDate === undefined) p.lastCareDate = null;
-                if(p.effectiveJoinDate === undefined) p.effectiveJoinDate = (p.type==='自用夥伴'||p.type==='經營') ? p.joinDate : null;
+                if(p.effectiveJoinDate === undefined) p.effectiveJoinDate = (p.type==='自用'||p.type==='經營'||p.type==='自用夥伴') ? p.joinDate : null;
+                if(p.type === '自用夥伴') p.type = '自用';
             });
             save();
         } else {
             partners = [
                 { id:'1', name:'林芳儀', birthday:'1995-03-21', level:'一級', type:'經營', joinDate:'2023-05-10', location:'台北市', intimacy:32, lastCareDate:'2026-04-14', effectiveJoinDate:'2023-05-10', levelHistory:[{level:'實習',date:'2023-05-10',awardReceived:true},{level:'三級',date:'2023-09-15',awardReceived:false},{level:'一級',date:'2024-02-20',awardReceived:false}], courses:[{name:'領導力',date:'2023-11-12'}], annualData:{} },
-                { id:'2', name:'陳冠宇', birthday:'1990-04-15', level:'皇家', type:'自用夥伴', joinDate:'2022-11-20', location:'台中市', intimacy:78, lastCareDate:'2026-04-15', effectiveJoinDate:'2022-11-20', levelHistory:[{level:'實習',date:'2022-11-20',awardReceived:true},{level:'二級',date:'2023-06-01',awardReceived:true},{level:'皇家',date:'2024-01-10',awardReceived:false}], courses:[], annualData:{} },
+                { id:'2', name:'陳冠宇', birthday:'1990-04-15', level:'皇家', type:'自用', joinDate:'2022-11-20', location:'台中市', intimacy:78, lastCareDate:'2026-04-15', effectiveJoinDate:'2022-11-20', levelHistory:[{level:'實習',date:'2022-11-20',awardReceived:true},{level:'二級',date:'2023-06-01',awardReceived:true},{level:'皇家',date:'2024-01-10',awardReceived:false}], courses:[], annualData:{} },
                 { id:'3', name:'張子晴', birthday:'2000-05-10', level:'三級輔導', type:'經營', joinDate:'2024-01-15', location:'高雄市', intimacy:15, lastCareDate:'2026-04-10', effectiveJoinDate:'2024-01-15', levelHistory:[{level:'實習',date:'2024-01-15',awardReceived:true},{level:'三級輔導',date:'2024-08-01',awardReceived:false}], courses:[], annualData:{} }
             ];
             save();
         }
     }
 
-    // 全域關閉按鈕 (右上角叉叉)
     document.querySelector('.modal-close')?.addEventListener('click', closeModal);
-    // 點擊遮罩關閉
     document.getElementById('dynamicModal')?.addEventListener('click', (e) => {
         if(e.target.classList.contains('modal-mask')) closeModal();
     });
 
-    // 搜尋
     const searchInput = document.querySelector('#searchPartnerInput');
     if(searchInput) searchInput.addEventListener('input', e => { searchKeyword = e.target.value; renderPartnerList(); });
     document.getElementById('clearSearchBtn')?.addEventListener('click', () => { if(searchInput) searchInput.value=''; searchKeyword=''; renderPartnerList(); });
