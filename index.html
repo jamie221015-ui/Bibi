@@ -2,840 +2,765 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>MORE大家庭｜夥伴紀錄</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>母親節團隊競賽 · 限動起承轉合+2</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            font-family: system-ui, 'Segoe UI', 'Helvetica Neue', 'Noto Sans', sans-serif;
         }
 
         body {
-            background-color: #FFFFFF;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            padding: 20px 16px 40px;
-            color: #333;
+            background: linear-gradient(145deg, #fff9f0 0%, #ffe6d5 100%);
+            min-height: 100vh;
+            padding: 20px 16px 60px;
         }
 
-        .app-container {
-            max-width: 600px;
+        .container {
+            max-width: 1500px;
             margin: 0 auto;
         }
 
-        .header {
+        /* 頂部比分條 - 柔和淺色 */
+        .score-bar {
+            background: linear-gradient(135deg, #ffe9e0, #ffd9c8);
+            border-radius: 60px;
+            padding: 14px 24px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            color: #7b4a38;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #ffcdb3;
+        }
+        .team-score-compact {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            background: rgba(255,245,235,0.7);
+            padding: 6px 20px;
+            border-radius: 48px;
+        }
+        .team-compact {
+            text-align: center;
+        }
+        .team-compact .name {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #b45f48;
+        }
+        .team-compact .points {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+            color: #c25b3c;
+        }
+        .vs {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0 6px;
+            color: #cc886e;
+        }
+        .leader-info {
+            background: #fff2e8;
+            padding: 6px 18px;
+            border-radius: 40px;
+            color: #a35134;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: inset 0 0 0 1px #ffe0ce;
+        }
+
+        /* 倒數計時區 */
+        .countdown-area {
+            background: #fff3ea;
+            border-radius: 60px;
+            padding: 12px 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #ffd5be;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .countdown-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #c47a5e;
+            letter-spacing: 1px;
+        }
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #dc6b4a;
+            line-height: 1.2;
+        }
+        .countdown-sub {
+            font-size: 0.7rem;
+            color: #b28b78;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: 2rem;
+            color: #b3413a;
+            text-shadow: 2px 2px 0 #ffd9c5;
+        }
+        .sub {
+            color: #b97f6e;
+            background: #fff4e6;
+            display: inline-block;
+            padding: 5px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+        }
+
+        /* 加分工具列 */
+        .action-bar {
+            background: #fff8f0;
+            border-radius: 60px;
+            padding: 16px 24px;
+            margin: 20px 0 32px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+            border: 1px solid #ffddcc;
+        }
+        .action-btn {
+            background: #ffede3;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 48px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #b14534;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .action-btn:hover {
+            background: #ffd5be;
+            transform: translateY(-2px);
+        }
+        .action-btn.special {
+            background: #ffe0cf;
+            color: #c25a3e;
+        }
+
+        .teams-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            margin-bottom: 48px;
+        }
+        .team-card {
+            flex: 1;
+            min-width: 340px;
+            background: white;
+            border-radius: 48px;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 1px solid #ffd5be;
+        }
+        .team-header {
+            padding: 20px 24px 12px;
+            background: #fff7f0;
+            border-bottom: 3px solid #ffbe9f;
+        }
+        .team-name-input {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: transparent;
+            border: none;
+            width: 100%;
+            padding: 4px 0;
+            color: #772e26;
+        }
+        .team-name-input:focus {
+            outline: none;
+            border-bottom: 2px dashed #ff8a5c;
+        }
+        .punish-area {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: #ffefe3;
+            padding: 8px 12px;
+            border-radius: 32px;
+        }
+        .punish-label {
+            font-size: 0.7rem;
+            font-weight: bold;
+            background: #e7b89c;
+            padding: 4px 12px;
+            border-radius: 30px;
+            color: white;
+        }
+        .punish-text {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            color: #8b4b3a;
+        }
+
+        .team-score {
+            padding: 16px 24px;
+            background: #fff3ea;
+            text-align: center;
+        }
+        .score-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #dc6b4a;
+        }
+
+        .members-section {
+            padding: 18px 20px;
+            background: #fffaf5;
+            border-top: 1px solid #ffe2d0;
+            border-bottom: 1px solid #ffe2d0;
+        }
+        .members-title {
+            font-weight: 700;
+            color: #c47a5e;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 20px;
+        }
+        .member-list {
+            display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            border-bottom: 2px solid #F0E4D4;
-            padding-bottom: 12px;
+            margin-bottom: 16px;
         }
-        h1 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: #9B6A42;
-        }
-        .tab-bar {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-            background: #F8F4EF;
-            padding: 6px;
-            border-radius: 60px;
-        }
-        .tab-btn {
-            flex: 1;
-            text-align: center;
-            padding: 10px 0;
+        .member-chip {
+            background: #fff1e8;
             border-radius: 40px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            background: transparent;
-            border: none;
-            color: #8B5A2B;
-            cursor: pointer;
-        }
-        .tab-btn.active {
-            background: #FFFFFF;
-            color: #B87C4A;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            border: 1px solid #EADBC6;
-        }
-        .tab-pane {
-            display: none;
-            animation: fade 0.2s ease;
-        }
-        .tab-pane.active-pane {
-            display: block;
-        }
-        @keyframes fade {
-            from { opacity: 0; transform: translateY(5px);}
-            to { opacity: 1; transform: translateY(0);}
-        }
-
-        /* 卡片基礎 */
-        .card {
-            background: #FFFFFF;
-            border-radius: 28px;
-            padding: 16px 20px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            border: 1px solid #F0E4D4;
-            margin-bottom: 14px;
-            cursor: pointer;
-            transition: 0.1s;
-        }
-        .card:active {
-            background: #FEFAF5;
-        }
-        .flex-between {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        /* 級別不同顏色框 */
-        .level-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            background: #F4EADF;
-            color: #5E3A1F;
-        }
-        .level-royal {
-            background: #F9E5A8;
-            color: #9B6A00;
-            border: 1px solid #E6C878;
-        }
-        .level-1 {
-            background: #E9DFF7;
-            color: #6B4E8A;
-            border: 1px solid #D1C2E3;
-        }
-        /* 二級改粉色 */
-        .level-2 {
-            background: #FDE2E4;   /* 淡粉色 */
-            color: #B3445C;        /* 深粉色文字 */
-            border: 1px solid #F8B5B8;
-        }
-        .level-3, .level-3-mentor {
-            background: #D6F0ED;
-            color: #1F6E6A;
-            border: 1px solid #A9D9D4;
-        }
-        .level-intern {
-            background: #D9E9F7;
-            color: #2A5F8A;
-            border: 1px solid #B9D3F0;
-        }
-
-        .status-badge {
-            background: #F3E9DE;
-            border-radius: 30px;
-            padding: 2px 8px;
-            font-size: 0.65rem;
-            margin-left: 6px;
-            color: #7C5E3A;
-        }
-        .qualify-badge {
-            background: #E0EED7;
-            color: #4A6A2F;
-            padding: 2px 8px;
-            border-radius: 30px;
-            font-size: 0.65rem;
-            margin-left: 6px;
+            padding: 6px 14px;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-        }
-        .info-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 10px;
-            font-size: 0.7rem;
-            color: #7C5E3A;
-        }
-        .progress-bar-bg {
-            background: #F0E2D4;
-            border-radius: 20px;
-            height: 6px;
-            overflow: hidden;
-            margin: 6px 0;
-        }
-        .progress-fill {
-            background: #D9B48B;
-            width: 0%;
-            height: 100%;
-            border-radius: 20px;
-        }
-        .small-text {
-            font-size: 0.7rem;
-            color: #7C5E3A;
-        }
-        .btn-sm {
-            background: #E9D9CB;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            border: none;
-            cursor: pointer;
-        }
-        .claim-btn {
-            background: #E0EED7;
-            color: #4A6A2F;
-        }
-        .reward-table {
-            background: #FEF9F0;
-            border-radius: 28px;
-            padding: 14px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .reward-items {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
             gap: 8px;
-        }
-        .reward-item {
-            background: white;
-            border-radius: 24px;
-            padding: 8px 12px;
-            min-width: 80px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #7b3d2c;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
-        .reward-amount {
+        .member-today-score {
+            background: #ecc7b6;
+            border-radius: 30px;
+            padding: 2px 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .delete-member {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #c27e64;
+            font-weight: bold;
             font-size: 1rem;
-            font-weight: 700;
-            color: #BC6F42;
+            margin-left: 4px;
         }
-        .empty-state {
-            text-align: center;
-            padding: 48px 20px;
-            background: #FFFFFF;
-            border-radius: 32px;
-            color: #C2A07E;
-            border: 1px solid #F0E4D4;
-        }
-
-        /* 模態框 */
-        .modal-mask {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.4);
-            backdrop-filter: blur(2px);
+        .add-member-form {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            visibility: hidden;
-            opacity: 0;
+            gap: 8px;
+            margin-top: 12px;
+            background: #fff0e6;
+            padding: 12px 12px;
+            border-radius: 60px;
+        }
+        .add-member-input {
+            flex: 1;
+            border: 1px solid #ffcfb5;
+            border-radius: 60px;
+            padding: 10px 16px;
+            background: white;
+            font-size: 0.9rem;
+        }
+        .add-member-btn {
+            background: #e07a5f;
+            border: none;
+            border-radius: 60px;
+            padding: 8px 20px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
             transition: 0.2s;
         }
-        .modal-mask.active {
-            visibility: visible;
-            opacity: 1;
+        .add-member-btn:hover {
+            background: #c05e44;
         }
-        .modal-container {
-            background: #FFFFFF;
-            width: 90%;
-            max-width: 520px;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 24px;
-            border-radius: 40px;
-            border: 1px solid #EAD5C0;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            position: relative;
-        }
-        .modal-container h2 {
-            font-size: 1.4rem;
-            color: #B87C4A;
-            margin-bottom: 16px;
-            text-align: center;
-        }
-        .modal-container h3 {
-            font-size: 1rem;
-            color: #A57142;
-            margin: 16px 0 8px;
-            border-left: 3px solid #EAD0B6;
-            padding-left: 10px;
-        }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        label {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #9B6A42;
-            display: block;
-            margin-bottom: 5px;
-        }
-        input, select {
-            width: 100%;
-            padding: 8px 12px;
-            border-radius: 28px;
-            border: 1px solid #F0DFCE;
+
+        /* 備用表單 */
+        .form-panel {
             background: white;
-            font-size: 0.85rem;
+            border-radius: 48px;
+            padding: 24px;
+            margin-bottom: 48px;
+            border: 1px solid #ffddcc;
         }
-        button {
-            background: #F4E8DD;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-weight: 500;
-            cursor: pointer;
-            font-size: 0.8rem;
+        .form-title {
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #b54733;
         }
-        .btn-group {
+        .form-grid {
             display: flex;
-            gap: 12px;
-            margin: 16px 0;
-            justify-content: center;
-        }
-        .add-section {
-            display: flex;
-            gap: 8px;
-            margin: 12px 0;
             flex-wrap: wrap;
+            gap: 16px;
+            align-items: flex-end;
         }
-        .history-item, .course-item {
-            background: #FEFAF5;
-            border-radius: 24px;
-            padding: 8px 12px;
-            margin-bottom: 8px;
-            border: 1px solid #F5E5D6;
+        .input-group {
+            flex: 1;
+            min-width: 150px;
+        }
+        .input-group label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #c27156;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1.5px solid #ffd5be;
+            background: #fffcf8;
+        }
+        .btn-primary {
+            background: #e07a5f;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 48px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .rule-hint {
+            background: #fff2e6;
+            border-radius: 28px;
+            padding: 10px 16px;
+            margin-top: 16px;
+            font-size: 0.7rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .log-section {
+            background: #fffef7;
+            border-radius: 48px;
+            padding: 20px;
+        }
+        .log-header {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
         }
-        hr {
-            margin: 16px 0;
-            border: none;
-            border-top: 1px solid #EDE0D2;
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        footer {
-            text-align: center;
-            font-size: 0.7rem;
-            color: #B88A5A;
-            margin-top: 32px;
-            font-weight: 500;
-        }
-        .search-box {
-            background: #FEFAF5;
-            border-radius: 40px;
-            padding: 4px 16px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid #F0E4D4;
-        }
-        .search-box input {
-            border: none;
-            background: transparent;
-            padding: 10px 0;
+        th, td {
+            text-align: left;
+            padding: 10px 6px;
+            border-bottom: 1px solid #ffdfcf;
             font-size: 0.85rem;
-            outline: none;
         }
-        .bottom-buttons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-        }
-        .modal-close {
-            position: absolute;
-            top: 16px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #C8AE92;
+        .delete-log {
             background: none;
-            padding: 0;
-            line-height: 1;
+            border: none;
+            cursor: pointer;
+            color: #e6947a;
         }
-        .modal-close:hover {
-            color: #9B6A42;
+        .footer-note {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 0.7rem;
+            color: #b28b78;
         }
-        .qualify-icon {
-            background: #E0EED7;
-            border-radius: 30px;
-            padding: 2px 8px;
-            font-size: 0.65rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
+        @media (max-width: 780px) {
+            .teams-grid { flex-direction: column; }
+            .score-bar { flex-direction: column; align-items: stretch; text-align: center; }
+            .action-bar { justify-content: center; }
+            .countdown-number { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
-<div class="app-container">
-    <div class="header">
-        <h1>🏠 MORE 大家庭</h1>
-        <button id="globalAddBtn" style="background:#FFF2E6; border:1px solid #E2D0BD; color:#B87C4A;">+ 新增夥伴</button>
+<div class="container">
+    <!-- 頂部即時比分條 -->
+    <div class="score-bar" id="scoreBar"></div>
+
+    <!-- 倒數計時區 -->
+    <div class="countdown-area" id="countdownArea">
+        <div class="countdown-title">⏳ 比賽衝刺倒數</div>
+        <div class="countdown-number" id="countdownNumber">-- 天</div>
+        <div class="countdown-sub">活動期間：2026/4/18 ～ 2026/5/11</div>
     </div>
 
-    <div class="tab-bar">
-        <button class="tab-btn active" data-tab="partners">我的夥伴們</button>
-        <button class="tab-btn" data-tab="gold">金MORE獎</button>
-        <button class="tab-btn" data-tab="family">家庭照顧</button>
+    <div class="hero">
+        <h1>🌸 母親節團隊激戰 🌸</h1>
+        <div class="sub">🏆 贏家3000元 · 輸家自我懲罰</div>
     </div>
 
-    <div id="partnersPane" class="tab-pane active-pane">
-        <div class="search-box">
-            <span>🔍</span>
-            <input type="text" id="searchPartnerInput" placeholder="搜尋夥伴姓名">
-            <button id="clearSearchBtn" style="background:none; font-size:1rem;">✕</button>
-        </div>
-        <div id="partnerListContainer"></div>
+    <!-- 加分工具列（新增「起承轉合+2」） -->
+    <div class="action-bar">
+        <button class="action-btn" data-type="1">① 發限動 (置入產品) +1</button>
+        <button class="action-btn" data-type="2">② 限動起承轉合 +2</button>
+        <button class="action-btn" data-type="3">③ 有人詢問 +3</button>
+        <button class="action-btn" data-type="4">④ 成交 +4</button>
+        <button class="action-btn" data-type="5">⑤ 發Reels +5</button>
+        <button class="action-btn special" data-type="6">⑥ 全組都有發 +6</button>
+        <button class="action-btn" data-type="7">⑦ 提供素材 +7</button>
     </div>
 
-    <div id="goldPane" class="tab-pane">
-        <div class="reward-table">
-            <div class="reward-items">
-                <div class="reward-item">三級 / 三級輔導<br><span class="reward-amount">$666</span><br>門檻10萬</div>
-                <div class="reward-item">二級<br><span class="reward-amount">$3,000</span><br>門檻30萬</div>
-                <div class="reward-item">一級<br><span class="reward-amount">$5,000</span><br>門檻90萬</div>
+    <div class="teams-grid" id="teamsGrid"></div>
+
+    <!-- 備用管理員表單 -->
+    <div class="form-panel">
+        <div class="form-title">📋 詳細加分表單 (備用)</div>
+        <div class="form-grid">
+            <div class="input-group">
+                <label>團隊</label>
+                <select id="teamSelectForm">
+                    <option value="A">左隊</option>
+                    <option value="B">右隊</option>
+                </select>
             </div>
-            <div class="small-text" style="margin-top:8px;">年度內升級分段累計，達標即可領獎</div>
+            <div class="input-group">
+                <label>成員</label>
+                <select id="memberSelectForm">
+                    <option value="">-- 請選擇 --</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>加分項目</label>
+                <select id="actionTypeForm">
+                    <option value="1">① 發限動 (置入產品) +1 (每日限1次)</option>
+                    <option value="2">② 限動起承轉合 +2 (每日限1次，與①擇一)</option>
+                    <option value="3">③ 有人詢問 +3</option>
+                    <option value="4">④ 成交 +4</option>
+                    <option value="5">⑤ 發Reels +5</option>
+                    <option value="6">⑥ 全組每人發限動 +6</option>
+                    <option value="7">⑦ 分享素材 +7</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <button class="btn-primary" id="addRecordBtn">✨ 新增加分</button>
+            </div>
         </div>
-        <div id="goldRewardContainer"></div>
+        <div class="rule-hint">
+            <span>📌 ① & ② 每人每日僅能擇一獲得 (限動相關)</span>
+            <span>👥 ⑥ 全組加分不需選成員</span>
+            <span>📊 隊員今日貢獻顯示在名字旁</span>
+        </div>
     </div>
 
-    <div id="familyPane" class="tab-pane">
-        <div id="careGameContainer"></div>
+    <div class="log-section">
+        <div class="log-header">
+            <h3>📋 近期加分紀錄</h3>
+            <button class="btn-sm" id="resetAllDataBtn" style="background:#ffdad0; border:none; padding:6px 16px; border-radius:40px;">🗑️ 重置全部</button>
+        </div>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead><tr><th>時間</th><th>團隊</th><th>成員</th><th>項目</th><th>分數</th><th></th></thead>
+                <tbody id="logBody"></tbody>
+            </table>
+        </div>
     </div>
-
-    <footer>培訓做得好 事業沒煩惱</footer>
-</div>
-
-<div id="dynamicModal" class="modal-mask">
-    <div class="modal-container">
-        <span class="modal-close">&times;</span>
-        <div id="modalContent"></div>
-    </div>
+    <div class="footer-note">✨ 點擊隊員旁的「✖」可刪除隊員 | 團隊名稱/懲罰可直接點擊修改 | 所有資料自動儲存</div>
 </div>
 
 <script>
-    // ---------- 配置 ----------
-    const LEVEL_ORDER = ['皇家', '一級', '二級', '三級輔導', '三級', '實習'];
-    const ALL_LEVELS = [...LEVEL_ORDER];
-    const PARTNER_TYPES = ['自用', '經營', '保留', '退出'];
-    const PRESET_COURSES = ['絕對成交', '執行力', '領導力', '引爆生命力', '彩妝課'];
-    const REWARD_CONFIG = {
-        '三級輔導': { threshold: 100000, amount: 666 },
-        '三級': { threshold: 100000, amount: 666 },
-        '二級': { threshold: 300000, amount: 3000 },
-        '一級': { threshold: 900000, amount: 5000 }
+    const STORAGE_KEY = "mother_day_contest_v5";
+    let appData = {
+        teams: {
+            A: { name: "愛心媽咪隊", punish: "輸家請喝珍奶", members: ["小美", "阿華", "小莉"] },
+            B: { name: "甜心寶貝隊", punish: "輸家跳舞影片", members: ["大雄", "靜香", "胖虎"] }
+        },
+        logs: []
     };
-    const CURRENT_YEAR = 2026;
 
-    let partners = [];
-    let activeTab = 'partners';
-    let searchKeyword = '';
+    // 倒數計時目標日期 (2026/5/11 23:59:59)
+    const END_DATE = new Date(2026, 4, 11, 23, 59, 59);
 
-    function save() { localStorage.setItem('partners_app_data', JSON.stringify(partners)); }
-
-    function typeWeight(t) { return t === '自用' || t === '經營' ? 0 : (t === '保留' ? 1 : 2); }
-    function levelWeight(l) { return LEVEL_ORDER.indexOf(l); }
-    function sortPartners(list) {
-        return [...list].sort((a,b) => {
-            if (typeWeight(a.type) !== typeWeight(b.type)) return typeWeight(a.type) - typeWeight(b.type);
-            if (levelWeight(a.level) !== levelWeight(b.level)) return levelWeight(a.level) - levelWeight(b.level);
-            return (a.joinDate || '').localeCompare(b.joinDate || '') * -1;
-        });
-    }
-
-    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[m])); }
-    function isBirthdayToday(bd) { if(!bd) return false; const t=new Date(), b=new Date(bd); return t.getMonth()===b.getMonth() && t.getDate()===b.getDate(); }
-
-    function effectiveMonths(p) {
-        const date = p.effectiveJoinDate || p.joinDate;
-        if(!date) return 0;
-        const start = new Date(date), now = new Date();
-        let months = (now.getFullYear()-start.getFullYear())*12 + (now.getMonth()-start.getMonth());
-        if(now.getDate() < start.getDate()) months--;
-        return Math.max(0, months);
-    }
-    function getQualifyBadge(p) {
-        if(p.type !== '自用' && p.type !== '經營') return null;
-        const m = effectiveMonths(p);
-        if(m >= 12) return '🎁 滿一年';
-        if(m >= 6) return '🌙 滿半年｜半額金MORE';
-        return null;
-    }
-
-    function updateEffectiveDate(p, oldType, newType) {
-        const wasActive = (oldType === '自用' || oldType === '經營');
-        const isActive = (newType === '自用' || newType === '經營');
-        if(!wasActive && isActive) p.effectiveJoinDate = new Date().toISOString().slice(0,10);
-        if(!p.effectiveJoinDate) p.effectiveJoinDate = p.joinDate;
-    }
-
-    function getSegments(p, year) {
-        const histories = (p.levelHistory || []).filter(h => LEVEL_ORDER.includes(h.level));
-        const filtered = histories.filter(h => h.date && h.date.startsWith(year)).sort((a,b)=>a.date.localeCompare(b.date));
-        let startLevel = p.level;
-        const before = histories.filter(h => h.date < `${year}-01-01`).sort((a,b)=>b.date.localeCompare(a.date));
-        if(before.length) startLevel = before[0].level;
-        let segs = [], cur = startLevel, last = `${year}-01-01`;
-        for(let r of filtered) {
-            if(r.date > last) segs.push({ level: cur, start: last, end: r.date });
-            cur = r.level;
-            last = r.date;
+    function updateCountdown() {
+        const now = new Date();
+        const diffMs = END_DATE - now;
+        const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+        const countdownEl = document.getElementById('countdownNumber');
+        if (!countdownEl) return;
+        if (diffMs <= 0) {
+            countdownEl.innerText = "比賽已結束";
+        } else {
+            countdownEl.innerText = `${diffDays} 天`;
         }
-        segs.push({ level: cur, start: last, end: `${year}-12-31` });
-        return segs;
     }
-    function calcLevelSales(p, year) {
-        const monthly = p.annualData?.[year]?.monthlySales || new Array(12).fill(0);
-        const segs = getSegments(p, year);
-        let sales = { '三級輔導':0, '三級':0, '二級':0, '一級':0 };
-        for(let s of segs) {
-            if(!REWARD_CONFIG[s.level]) continue;
-            let sm = new Date(s.start).getMonth(), em = new Date(s.end).getMonth();
-            if(s.start.slice(0,4) < year) sm = 0;
-            if(s.end.slice(0,4) > year) em = 11;
-            for(let m=sm; m<=em; m++) sales[s.level] += monthly[m] || 0;
+    setInterval(updateCountdown, 1000);
+
+    function saveToLocal() { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
+    function loadFromLocal() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+            try { const p = JSON.parse(raw); if (p.teams && p.logs) appData = p; } catch(e) {}
         }
-        return sales;
+        if (!appData.teams) appData.teams = { A: { name: "愛心媽咪隊", punish: "輸家請喝珍奶", members: ["小美","阿華","小莉"] }, B: { name: "甜心寶貝隊", punish: "輸家跳舞影片", members: ["大雄","靜香","胖虎"] } };
+        if (!appData.teams.A.members) appData.teams.A.members = ["小美","阿華","小莉"];
+        if (!appData.teams.B.members) appData.teams.B.members = ["大雄","靜香","胖虎"];
+        if (!appData.logs) appData.logs = [];
+        saveToLocal();
     }
-    function getRewardStatus(p, year) {
-        const sales = calcLevelSales(p, year);
-        const claimed = p.annualData?.[year]?.claimedRewards || {};
-        return Object.entries(REWARD_CONFIG).map(([lvl,cfg]) => ({
-            level: lvl, threshold: cfg.threshold, amount: cfg.amount,
-            sales: sales[lvl] || 0, isQualified: (sales[lvl]||0) >= cfg.threshold,
-            isClaimed: claimed[lvl] || false
-        }));
+    function getTodayStr() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+
+    // 檢查同一人今天是否已經有過限動相關加分 (type 1 或 2)
+    function hasTodayLimitStory(team, member, today) {
+        return appData.logs.some(l => l.team === team && l.member === member && l.date === today && (l.type === 1 || l.type === 2));
     }
 
-    function claimReward(pid, lvl) {
-        const p = partners.find(p=>p.id===pid);
-        if(!p) return;
-        const status = getRewardStatus(p, CURRENT_YEAR).find(r=>r.level===lvl);
-        if(status?.isQualified && !status.isClaimed) {
-            if(!p.annualData) p.annualData = {};
-            if(!p.annualData[CURRENT_YEAR]) p.annualData[CURRENT_YEAR] = { monthlySales: new Array(12).fill(0), claimedRewards: {} };
-            p.annualData[CURRENT_YEAR].claimedRewards[lvl] = true;
-            save();
-            alert(`已領取 ${lvl} 獎金 $${status.amount.toLocaleString()} 元`);
-            renderGoldPage();
-        } else alert("尚未符合領獎資格或已領取過");
+    function hasTodayTeamBonus6(team, today) { // 原 type 5 變成 type 6 (全組)
+        return appData.logs.some(l => l.team === team && l.type === 6 && l.date === today);
     }
 
-    function editMonthly(pid) {
-        const p = partners.find(p=>p.id===pid);
-        if(!p) return;
-        if(!p.annualData) p.annualData = {};
-        if(!p.annualData[CURRENT_YEAR]) p.annualData[CURRENT_YEAR] = { monthlySales: new Array(12).fill(0), claimedRewards: {} };
-        const monthly = p.annualData[CURRENT_YEAR].monthlySales;
-        let html = `<h3>${p.name} - ${CURRENT_YEAR} 每月補貨 (元)</h3><div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;">`;
-        const months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-        for(let i=0;i<12;i++) html += `<div><label>${months[i]}</label><input type="number" id="m${i}" value="${monthly[i]||0}" step="1000"></div>`;
-        html += `</div><div class="btn-group"><button id="saveMonthBtn">儲存</button><button id="cancelMonthBtn">取消</button></div>`;
-        const modal = document.getElementById('dynamicModal'), modalC = document.getElementById('modalContent');
-        modalC.innerHTML = html;
-        modal.classList.add('active');
-        document.getElementById('saveMonthBtn').onclick = () => {
-            for(let i=0;i<12;i++) monthly[i] = parseInt(document.getElementById(`m${i}`).value) || 0;
-            save();
-            modal.classList.remove('active');
-            renderGoldPage();
-            if(activeTab === 'partners') renderPartnerList();
+    function getMemberTodayScore(team, member, today) {
+        return appData.logs.filter(l => l.team === team && l.member === member && l.date === today && l.type !== 6).reduce((s,l)=>s+l.points,0);
+    }
+    function computeTeamScore(team) { return appData.logs.filter(l=>l.team===team).reduce((s,l)=>s+l.points,0); }
+
+    function addRecord(team, member, typeVal) {
+        const type = parseInt(typeVal,10);
+        // 分數對應: type 1:+1, 2:+2, 3:+3, 4:+4, 5:+5, 6:+6, 7:+7
+        const pointsMap = {1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7};
+        const points = pointsMap[type];
+        if (!points) return { success: false, msg: "錯誤項目" };
+        const today = getTodayStr();
+
+        // 個人加分需選擇成員
+        if (type !== 6) {
+            if (!member) return { success: false, msg: "請選擇成員" };
+            const membersList = appData.teams[team].members;
+            if (!membersList.includes(member)) return { success: false, msg: `❌ ${member} 不是該團隊成員` };
+        }
+
+        // 限動相關 (type 1 或 2) 互斥，一天只能擇一
+        if (type === 1 || type === 2) {
+            if (hasTodayLimitStory(team, member, today)) {
+                return { success: false, msg: `⚠️ ${member} 今日已有限動加分 (一般或起承轉合)，每人每日限一次` };
+            }
+        }
+
+        // 全組加分 (type 6)
+        if (type === 6) {
+            if (member && member !== "") return { success: false, msg: "全組加分不需選成員" };
+            if (hasTodayTeamBonus6(team, today)) return { success: false, msg: "今日已用過全組加分" };
+        }
+
+        const newLog = {
+            id: Date.now() + Math.random(),
+            team: team,
+            member: (type === 6) ? "全組行動" : member,
+            type: type,
+            points: points,
+            date: today,
+            timestamp: Date.now()
         };
-        document.getElementById('cancelMonthBtn').onclick = () => modal.classList.remove('active');
+        appData.logs.unshift(newLog);
+        saveToLocal();
+        renderAll();
+        return { success: true, msg: `✅ +${points}分 (${type===6?'團隊':member})` };
     }
 
-    function renderGoldPage() {
-        const container = document.getElementById('goldRewardContainer');
-        if(!container) return;
-        const valid = partners.filter(p => (p.type==='自用'||p.type==='經營') && p.level!=='皇家' && p.level!=='實習');
-        if(!valid.length) { container.innerHTML = `<div class="empty-state">✨ 無符合獎金資格夥伴 ✨</div>`; return; }
-        let html = '';
-        for(let p of sortPartners(valid)) {
-            const rewards = getRewardStatus(p, CURRENT_YEAR);
-            const current = p.level;
-            const cfg = REWARD_CONFIG[current];
-            const sales = cfg ? (calcLevelSales(p, CURRENT_YEAR)[current]||0) : 0;
-            const progress = cfg ? Math.min(100, (sales/cfg.threshold)*100) : 0;
-            const remaining = cfg ? Math.max(0, cfg.threshold - sales) : 0;
-            const hasClaimable = rewards.some(r=>r.isQualified && !r.isClaimed);
-            const badge = getQualifyBadge(p);
-            let levelClass = '';
-            if(p.level === '皇家') levelClass = 'level-royal';
-            else if(p.level === '一級') levelClass = 'level-1';
-            else if(p.level === '二級') levelClass = 'level-2';
-            else if(p.level === '三級輔導' || p.level === '三級') levelClass = 'level-3';
-            else if(p.level === '實習') levelClass = 'level-intern';
-            html += `<div class="card" data-id="${p.id}" style="cursor:pointer;">
-                <div class="flex-between">
-                    <div>
-                        <span class="level-badge ${levelClass}">${p.level}</span>
-                        <strong> ${escapeHtml(p.name)}</strong>
-                        ${hasClaimable ? '<span style="margin-left:4px;">👑</span>' : ''}
-                        ${badge ? `<span class="qualify-badge" style="margin-left:6px;">${badge}</span>` : ''}
-                    </div>
-                    <button class="btn-sm" onclick="event.stopPropagation(); editMonthly('${p.id}')">📝 業績</button>
+    function deleteLog(id) { appData.logs = appData.logs.filter(l=>l.id!==id); saveToLocal(); renderAll(); }
+    function resetAll() { if(confirm("⚠️ 重置所有數據？")) { appData = { teams: { A: { name:"愛心媽咪隊", punish:"輸家請喝珍奶", members:["小美","阿華","小莉"] }, B: { name:"甜心寶貝隊", punish:"輸家跳舞影片", members:["大雄","靜香","胖虎"] } }, logs: [] }; saveToLocal(); renderAll(); } }
+    function addMember(team, name) { name = name.trim(); if(!name) return false; if(appData.teams[team].members.includes(name)) return false; appData.teams[team].members.push(name); saveToLocal(); renderAll(); return true; }
+    function removeMember(team, name) { if(appData.teams[team].members.length<=1) { alert("至少保留一名隊員"); return false; } appData.teams[team].members = appData.teams[team].members.filter(m=>m!==name); saveToLocal(); renderAll(); return true; }
+    function updateTeamName(team, newName) { appData.teams[team].name = newName; saveToLocal(); renderAll(); }
+    function updateTeamPunish(team, newPunish) { appData.teams[team].punish = newPunish; saveToLocal(); renderAll(); }
+
+    function renderTopScoreBar() {
+        const scoreA = computeTeamScore('A');
+        const scoreB = computeTeamScore('B');
+        const leader = scoreA > scoreB ? appData.teams.A.name : (scoreB > scoreA ? appData.teams.B.name : "平手");
+        const diff = Math.abs(scoreA-scoreB);
+        const bar = document.getElementById('scoreBar');
+        bar.innerHTML = `
+            <div class="team-score-compact">
+                <div class="team-compact"><div class="name">${escapeHtml(appData.teams.A.name)}</div><div class="points">${scoreA}</div></div>
+                <span class="vs">VS</span>
+                <div class="team-compact"><div class="name">${escapeHtml(appData.teams.B.name)}</div><div class="points">${scoreB}</div></div>
+            </div>
+            <div class="leader-info">🏆 ${leader} ${scoreA!==scoreB ? `領先 ${diff} 分` : "雙方平手"}</div>
+        `;
+    }
+
+    function renderTeams() {
+        const grid = document.getElementById('teamsGrid');
+        const today = getTodayStr();
+        const renderMemberList = (teamLetter, teamKey) => {
+            const members = appData.teams[teamKey].members;
+            let html = '<div class="member-list">';
+            members.forEach(m => {
+                const todayScore = getMemberTodayScore(teamLetter, m, today);
+                html += `<div class="member-chip">
+                            ${escapeHtml(m)}
+                            <span class="member-today-score">📅 今日 +${todayScore}</span>
+                            <button class="delete-member" data-team="${teamLetter}" data-member="${escapeHtml(m)}">✖</button>
+                         </div>`;
+            });
+            html += '</div>';
+            html += `<div class="add-member-form">
+                        <input type="text" class="add-member-input" id="newMember${teamLetter}" placeholder="新隊員名字" autocomplete="off">
+                        <button class="add-member-btn" data-team="${teamLetter}">➕ 新增隊員</button>
+                     </div>`;
+            return html;
+        };
+
+        grid.innerHTML = `
+            <div class="team-card">
+                <div class="team-header">
+                    <input type="text" class="team-name-input" id="teamAName" value="${escapeHtml(appData.teams.A.name)}">
+                    <div class="punish-area"><span class="punish-label">😈 自我懲罰</span><input type="text" class="punish-text" id="teamAPunish" value="${escapeHtml(appData.teams.A.punish)}"></div>
                 </div>
-                ${cfg ? `<div class="progress-bar-bg"><div class="progress-fill" style="width:${progress}%"></div></div>
-                <div class="small-text flex-between"><span>${current} 門檻 ${cfg.threshold.toLocaleString()}</span><span>累積 ${sales.toLocaleString()} ${remaining>0 ? `(差 ${remaining.toLocaleString()})` : '✅達標'}</span></div>` : `<div class="small-text">⭐ ${current} 無年度獎金，可領取升級前獎勵</div>`}
-                ${rewards.filter(r=>r.isQualified && !r.isClaimed).map(r=>`<div class="flex-between" style="margin-top:8px;"><span>${r.level} 獎金 $${r.amount.toLocaleString()}</span><button class="btn-sm claim-btn" onclick="event.stopPropagation(); claimReward('${p.id}','${r.level}')">領取</button></div>`).join('')}
-            </div>`;
-        }
-        container.innerHTML = html;
-        document.querySelectorAll('#goldRewardContainer .card').forEach(c => c.addEventListener('click', (e) => { if(e.target.tagName!=='BUTTON') editMonthly(c.dataset.id); }));
-    }
-
-    function renderPartnerList() {
-        const container = document.getElementById('partnerListContainer');
-        let filtered = partners.filter(p => p.name.toLowerCase().includes(searchKeyword.toLowerCase()));
-        const sorted = sortPartners(filtered);
-        if(!sorted.length) { container.innerHTML = `<div class="empty-state">✨ 沒有夥伴 ✨</div>`; return; }
-        let html = '';
-        for(let p of sorted) {
-            const cake = isBirthdayToday(p.birthday) ? '🎂' : '';
-            const badge = getQualifyBadge(p);
-            let levelClass = '';
-            if(p.level === '皇家') levelClass = 'level-royal';
-            else if(p.level === '一級') levelClass = 'level-1';
-            else if(p.level === '二級') levelClass = 'level-2';
-            else if(p.level === '三級輔導' || p.level === '三級') levelClass = 'level-3';
-            else if(p.level === '實習') levelClass = 'level-intern';
-            html += `<div class="card" data-id="${p.id}">
-                <div class="flex-between">
-                    <div>
-                        <span class="level-badge ${levelClass}">${p.level}</span>
-                        <strong> ${escapeHtml(p.name)}</strong> ${cake}
-                        <span class="status-badge">${p.type}</span>
-                        ${badge ? `<span class="qualify-badge" style="margin-left:6px;">${badge}</span>` : ''}
-                    </div>
+                <div class="team-score"><div class="score-number">${computeTeamScore('A')}</div><div>團隊總分</div></div>
+                <div class="members-section"><div class="members-title">👥 隊員名單 (今日貢獻)</div>${renderMemberList('A','A')}</div>
+            </div>
+            <div class="team-card">
+                <div class="team-header">
+                    <input type="text" class="team-name-input" id="teamBName" value="${escapeHtml(appData.teams.B.name)}">
+                    <div class="punish-area"><span class="punish-label">😈 自我懲罰</span><input type="text" class="punish-text" id="teamBPunish" value="${escapeHtml(appData.teams.B.punish)}"></div>
                 </div>
-                <div class="info-row">
-                    <span>📅 加盟 ${p.joinDate?.slice(0,7) || '?'}</span>
-                    <span>📍 ${escapeHtml(p.location) || '未填'}</span>
-                    <span>🎂 ${p.birthday || '無'}</span>
-                </div>
-            </div>`;
-        }
-        container.innerHTML = html;
-        document.querySelectorAll('#partnerListContainer .card').forEach(c => c.addEventListener('click', () => openDetailModal(c.dataset.id)));
-    }
-
-    function renderFamily() {
-        const container = document.getElementById('careGameContainer');
-        if(!partners.length) { container.innerHTML = '<div class="empty-state">👶 還沒有家庭成員</div>'; return; }
-        const today = new Date().toISOString().slice(0,10);
-        let html = '';
-        for(let p of partners) {
-            const can = (p.lastCareDate !== today);
-            let levelClass = '';
-            if(p.level === '皇家') levelClass = 'level-royal';
-            else if(p.level === '一級') levelClass = 'level-1';
-            else if(p.level === '二級') levelClass = 'level-2';
-            else if(p.level === '三級輔導' || p.level === '三級') levelClass = 'level-3';
-            else if(p.level === '實習') levelClass = 'level-intern';
-            html += `<div class="card">
-                <div class="flex-between"><strong>${escapeHtml(p.name)}</strong> <span class="level-badge ${levelClass}">${p.level}</span> ${isBirthdayToday(p.birthday)?'🎂':''} <span class="status-badge">${p.type}</span></div>
-                <div>親密度 ${p.intimacy||0}/100</div>
-                <div class="progress-bar-bg"><div class="progress-fill" style="width:${p.intimacy||0}%"></div></div>
-                <div class="small-text">${p.lastCareDate ? `上次照顧 ${p.lastCareDate}` : '尚未照顧'}</div>
-                <button class="btn-sm" data-id="${p.id}" style="margin-top:8px;" ${!can ? 'disabled' : ''}>${can ? '🤝 今天照顧' : '✅ 今日已照顧'}</button>
-            </div>`;
-        }
-        container.innerHTML = html;
-        document.querySelectorAll('.btn-sm[data-id]').forEach(btn => {
-            if(!btn.disabled) btn.onclick = () => carePartner(btn.dataset.id);
-        });
-    }
-    function carePartner(pid) {
-        const p = partners.find(p=>p.id===pid);
-        if(!p) return;
-        const today = new Date().toISOString().slice(0,10);
-        if(p.lastCareDate === today) { alert('今天已照顧過'); return; }
-        p.intimacy = Math.min(100, (p.intimacy||0)+5);
-        p.lastCareDate = today;
-        save();
-        if(activeTab === 'family') renderFamily();
-        else renderPartnerList();
-        alert(`陪伴 ${p.name}，親密度+5`);
-    }
-
-    function openDetailModal(id) {
-        const p = partners.find(p=>p.id===id);
-        if(!p) return;
-        const levelOpts = ALL_LEVELS.map(l => `<option ${p.level===l?'selected':''}>${l}</option>`).join('');
-        const typeOpts = PARTNER_TYPES.map(t => `<option ${p.type===t?'selected':''}>${t}</option>`).join('');
-        const historyHtml = (p.levelHistory||[]).slice().reverse().map(h => `<div class="history-item"><span><strong>${h.level}</strong> ${h.date}</span><span>${h.awardReceived ? '已領獎' : ''}</span></div>`).join('');
-        const coursesHtml = (p.courses||[]).map(c => `<div class="course-item">📘 ${c.name} ${c.date}</div>`).join('');
-        const levelSelectWithStatus = `<select id="newLevelSel">${ALL_LEVELS.map(l=>`<option>${l}</option>`).join('')}<option value="保留">保留</option><option value="退出">退出</option></select>`;
-        const content = `
-            <h2>✏️ ${escapeHtml(p.name)}</h2>
-            <div class="form-group"><label>姓名</label><input id="editName" value="${escapeHtml(p.name)}"></div>
-            <div class="form-group"><label>生日</label><input type="date" id="editBirth" value="${p.birthday||''}"></div>
-            <div class="form-group"><label>級別</label><select id="editLevel">${levelOpts}</select></div>
-            <div class="form-group"><label>類型</label><select id="editType">${typeOpts}</select></div>
-            <div class="form-group"><label>加盟日</label><input type="date" id="editJoin" value="${p.joinDate||''}"></div>
-            <div class="form-group"><label>居住地</label><input id="editLoc" value="${escapeHtml(p.location||'')}"></div>
-            <hr>
-            <h3>升降級紀錄</h3>
-            <div id="historyArea">${historyHtml || '<div class="small-text">無</div>'}</div>
-            <div class="add-section">${levelSelectWithStatus}<input type="date" id="newDate"><button id="addHistoryBtn" class="btn-sm">新增</button></div>
-            <hr>
-            <h3>課程紀錄</h3>
-            <div id="courseArea">${coursesHtml || '<div class="small-text">無</div>'}</div>
-            <div class="add-section"><select id="courseSel"><option value="">選擇課程</option>${PRESET_COURSES.map(c=>`<option>${c}</option>`).join('')}</select><input type="date" id="courseDate"><button id="addCourseBtn" class="btn-sm">新增</button></div>
-            <div class="bottom-buttons">
-                <button id="saveBtn">💾 儲存</button>
-                <button id="delBtn" style="background:#F3DFD4;">🗑️ 刪除</button>
+                <div class="team-score"><div class="score-number">${computeTeamScore('B')}</div><div>團隊總分</div></div>
+                <div class="members-section"><div class="members-title">👥 隊員名單 (今日貢獻)</div>${renderMemberList('B','B')}</div>
             </div>
         `;
-        const modal = document.getElementById('dynamicModal'), modalC = document.getElementById('modalContent');
-        modalC.innerHTML = content;
-        modal.classList.add('active');
-        document.getElementById('saveBtn').onclick = () => {
-            const oldType = p.type, newType = document.getElementById('editType').value;
-            p.name = document.getElementById('editName').value;
-            p.birthday = document.getElementById('editBirth').value;
-            const newLv = document.getElementById('editLevel').value;
-            if(p.level !== newLv) { p.levelHistory.push({level:newLv, date:new Date().toISOString().slice(0,10), awardReceived:false}); p.level = newLv; }
-            p.type = newType;
-            p.joinDate = document.getElementById('editJoin').value;
-            p.location = document.getElementById('editLoc').value;
-            updateEffectiveDate(p, oldType, newType);
-            if(!p.effectiveJoinDate) p.effectiveJoinDate = p.joinDate;
-            save();
-            openDetailModal(p.id);
-        };
-        document.getElementById('delBtn').onclick = () => { if(confirm('刪除此夥伴？')){ partners=partners.filter(x=>x.id!==p.id); save(); closeModal(); refreshAll(); } };
-        document.getElementById('addHistoryBtn').onclick = () => {
-            const val = document.getElementById('newLevelSel').value;
-            const dt = document.getElementById('newDate').value;
-            if(!dt) { alert("請選日期"); return; }
-            if(val === '保留' || val === '退出') {
-                p.levelHistory.push({level:val, date:dt, awardReceived:false});
-                const oldType = p.type, newType = val;
-                if(oldType !== newType) { p.type = newType; updateEffectiveDate(p, oldType, newType); }
-                save();
-                openDetailModal(p.id);
-            } else {
-                p.levelHistory.push({level:val, date:dt, awardReceived:false});
-                p.level = val;
-                save();
-                openDetailModal(p.id);
-            }
-        };
-        document.getElementById('addCourseBtn').onclick = () => {
-            const cn = document.getElementById('courseSel').value;
-            const cd = document.getElementById('courseDate').value;
-            if(cn && cd) { p.courses.push({name:cn, date:cd}); save(); openDetailModal(p.id); }
-        };
-    }
 
-    function closeModal() { document.getElementById('dynamicModal').classList.remove('active'); }
-    function refreshAll() {
-        if(activeTab === 'partners') renderPartnerList();
-        else if(activeTab === 'gold') renderGoldPage();
-        else renderFamily();
-    }
+        document.getElementById('teamAName')?.addEventListener('change', e=>updateTeamName('A', e.target.value));
+        document.getElementById('teamAPunish')?.addEventListener('change', e=>updateTeamPunish('A', e.target.value));
+        document.getElementById('teamBName')?.addEventListener('change', e=>updateTeamName('B', e.target.value));
+        document.getElementById('teamBPunish')?.addEventListener('change', e=>updateTeamPunish('B', e.target.value));
 
-    function openAddModal() {
-        const content = `<h2>新增夥伴</h2>
-            <div class="form-group"><label>姓名 *</label><input id="newName"></div>
-            <div class="form-group"><label>生日</label><input type="date" id="newBirth"></div>
-            <div class="form-group"><label>級別</label><select id="newLevel">${ALL_LEVELS.map(l=>`<option>${l}</option>`).join('')}</select></div>
-            <div class="form-group"><label>類型</label><select id="newType">${PARTNER_TYPES.map(t=>`<option>${t}</option>`).join('')}</select></div>
-            <div class="form-group"><label>加盟日</label><input type="date" id="newJoin"></div>
-            <div class="form-group"><label>居住地</label><input id="newLoc"></div>
-            <div class="btn-group"><button id="confirmAdd">建立</button><button id="cancelAdd">取消</button></div>`;
-        const modal = document.getElementById('dynamicModal'), modalC = document.getElementById('modalContent');
-        modalC.innerHTML = content;
-        modal.classList.add('active');
-        document.getElementById('confirmAdd').onclick = () => {
-            const name = document.getElementById('newName').value.trim();
-            if(!name) return;
-            const join = document.getElementById('newJoin').value || new Date().toISOString().slice(0,10);
-            const newType = document.getElementById('newType').value;
-            const newP = {
-                id: Date.now()+'-'+Math.random(),
-                name, birthday: document.getElementById('newBirth').value,
-                level: document.getElementById('newLevel').value,
-                type: newType, joinDate: join,
-                location: document.getElementById('newLoc').value,
-                levelHistory: [], courses: [], intimacy: 0, lastCareDate: null, annualData: {}
-            };
-            newP.levelHistory.push({level:newP.level, date:join, awardReceived:false});
-            if(newType === '自用' || newType === '經營') newP.effectiveJoinDate = join;
-            else newP.effectiveJoinDate = null;
-            partners.push(newP);
-            save();
-            closeModal();
-            refreshAll();
-        };
-        document.getElementById('cancelAdd').onclick = closeModal;
-    }
-
-    function switchTab(tab) {
-        activeTab = tab;
-        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active-pane'));
-        document.getElementById(`${tab}Pane`).classList.add('active-pane');
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
-        if(tab === 'partners') renderPartnerList();
-        else if(tab === 'gold') renderGoldPage();
-        else renderFamily();
-    }
-
-    function loadData() {
-        const stored = localStorage.getItem('partners_app_data');
-        if(stored) {
-            partners = JSON.parse(stored);
-            partners.forEach(p => {
-                if(!p.levelHistory) p.levelHistory = [];
-                if(!p.courses) p.courses = [];
-                p.levelHistory.forEach(h => { if(h.awardReceived===undefined) h.awardReceived=false; });
-                if(!p.annualData) p.annualData = {};
-                if(p.intimacy === undefined) p.intimacy = 0;
-                if(p.lastCareDate === undefined) p.lastCareDate = null;
-                if(p.effectiveJoinDate === undefined) p.effectiveJoinDate = (p.type==='自用'||p.type==='經營'||p.type==='自用夥伴') ? p.joinDate : null;
-                if(p.type === '自用夥伴') p.type = '自用';
+        document.querySelectorAll('.add-member-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const team = btn.getAttribute('data-team');
+                const input = document.getElementById(`newMember${team}`);
+                const newName = input.value.trim();
+                if(newName) { if(addMember(team, newName)) input.value=''; else alert('隊員已存在'); }
+                else alert('請輸入名稱');
             });
-            save();
+        });
+        document.querySelectorAll('.delete-member').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const team = btn.getAttribute('data-team');
+                const member = btn.getAttribute('data-member');
+                if(confirm(`刪除隊員「${member}」？`)) removeMember(team, member);
+            });
+        });
+    }
+
+    function renderLogTable() {
+        const tbody = document.getElementById('logBody');
+        if(!tbody) return;
+        if(appData.logs.length===0) { tbody.innerHTML='<tr><td colspan="6" style="text-align:center">暫無紀錄</td></tr>'; return; }
+        let html='';
+        const typeMap = {1:'①限動+1',2:'②起承轉合+2',3:'③詢問+3',4:'④成交+4',5:'⑤Reels+5',6:'⑥全組+6',7:'⑦素材+7'};
+        for(let log of appData.logs) {
+            const teamName = log.team==='A'? appData.teams.A.name : appData.teams.B.name;
+            const timeStr = new Date(log.timestamp).toLocaleString('zh-TW');
+            html+=`<tr><td style="white-space:nowrap">${escapeHtml(timeStr)}</td><td><span class="badge" style="background:#fce5d8;padding:2px 10px;">${escapeHtml(teamName)}</span></td><td>${escapeHtml(log.member||'—')}</td><td>${typeMap[log.type]}</td><td>+${log.points}</td><td><button class="delete-log" data-id="${log.id}">🗑️</button></td></tr>`;
+        }
+        tbody.innerHTML = html;
+        document.querySelectorAll('.delete-log').forEach(btn => {
+            btn.addEventListener('click', (e) => { const id = parseInt(btn.getAttribute('data-id'),10); if(confirm('刪除此筆？')) deleteLog(id); });
+        });
+    }
+
+    function showAddDialog(type) {
+        if (type === 6) { // 全組加分
+            const teamKey = prompt("請選擇團隊：\n輸入 A 或 B\nA = 左隊\nB = 右隊");
+            if (!teamKey) return;
+            const team = teamKey.toUpperCase() === 'A' ? 'A' : (teamKey.toUpperCase() === 'B' ? 'B' : null);
+            if (!team) { alert("請輸入 A 或 B"); return; }
+            const res = addRecord(team, "", "6");
+            alert(res.msg);
         } else {
-            partners = [
-                { id:'1', name:'林芳儀', birthday:'1995-03-21', level:'一級', type:'經營', joinDate:'2023-05-10', location:'台北市', intimacy:32, lastCareDate:'2026-04-14', effectiveJoinDate:'2023-05-10', levelHistory:[{level:'實習',date:'2023-05-10',awardReceived:true},{level:'三級',date:'2023-09-15',awardReceived:false},{level:'一級',date:'2024-02-20',awardReceived:false}], courses:[{name:'領導力',date:'2023-11-12'}], annualData:{} },
-                { id:'2', name:'陳冠宇', birthday:'1990-04-15', level:'皇家', type:'自用', joinDate:'2022-11-20', location:'台中市', intimacy:78, lastCareDate:'2026-04-15', effectiveJoinDate:'2022-11-20', levelHistory:[{level:'實習',date:'2022-11-20',awardReceived:true},{level:'二級',date:'2023-06-01',awardReceived:true},{level:'皇家',date:'2024-01-10',awardReceived:false}], courses:[], annualData:{} },
-                { id:'3', name:'張子晴', birthday:'2000-05-10', level:'三級輔導', type:'經營', joinDate:'2024-01-15', location:'高雄市', intimacy:15, lastCareDate:'2026-04-10', effectiveJoinDate:'2024-01-15', levelHistory:[{level:'實習',date:'2024-01-15',awardReceived:true},{level:'三級輔導',date:'2024-08-01',awardReceived:false}], courses:[], annualData:{} }
-            ];
-            save();
+            const teamKey = prompt("請選擇團隊：\n輸入 A 或 B\nA = 左隊\nB = 右隊");
+            if (!teamKey) return;
+            const team = teamKey.toUpperCase() === 'A' ? 'A' : (teamKey.toUpperCase() === 'B' ? 'B' : null);
+            if (!team) { alert("請輸入 A 或 B"); return; }
+            const members = appData.teams[team].members;
+            if (!members.length) { alert("此團隊尚無隊員，請先新增隊員"); return; }
+            const listStr = members.map((m,i)=>`${i+1}. ${m}`).join('\n');
+            const input = prompt(`請選擇成員 (輸入數字或名稱)\n${listStr}`);
+            if (!input) return;
+            let selected = null;
+            if (!isNaN(parseInt(input))) { let idx=parseInt(input)-1; if(idx>=0 && idx<members.length) selected=members[idx]; }
+            else { if(members.includes(input.trim())) selected=input.trim(); }
+            if (!selected) { alert(`請從: ${members.join(', ')} 中選擇`); return; }
+            const res = addRecord(team, selected, type.toString());
+            alert(res.msg);
         }
     }
 
-    document.querySelector('.modal-close')?.addEventListener('click', closeModal);
-    document.getElementById('dynamicModal')?.addEventListener('click', (e) => {
-        if(e.target.classList.contains('modal-mask')) closeModal();
-    });
+    function bindQuickActions() {
+        const btns = document.querySelectorAll('.action-btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const type = parseInt(btn.getAttribute('data-type'), 10);
+                showAddDialog(type);
+            });
+        });
+    }
 
-    const searchInput = document.querySelector('#searchPartnerInput');
-    if(searchInput) searchInput.addEventListener('input', e => { searchKeyword = e.target.value; renderPartnerList(); });
-    document.getElementById('clearSearchBtn')?.addEventListener('click', () => { if(searchInput) searchInput.value=''; searchKeyword=''; renderPartnerList(); });
-    document.getElementById('globalAddBtn')?.addEventListener('click', openAddModal);
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
-    window.editMonthly = editMonthly;
-    window.claimReward = claimReward;
+    function updateMemberSelectForm() {
+        const teamSelect = document.getElementById('teamSelectForm');
+        const memberSelect = document.getElementById('memberSelectForm');
+        const members = appData.teams[teamSelect.value].members || [];
+        memberSelect.innerHTML = '<option value="">-- 請選擇成員 --</option>' + members.map(m=>`<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('');
+    }
 
-    loadData();
-    switchTab('partners');
+    function bindForm() {
+        const teamSelect = document.getElementById('teamSelectForm');
+        const addBtn = document.getElementById('addRecordBtn');
+        const memberSelect = document.getElementById('memberSelectForm');
+        const actionSelect = document.getElementById('actionTypeForm');
+        teamSelect.addEventListener('change', ()=>updateMemberSelectForm());
+        updateMemberSelectForm();
+        addBtn.addEventListener('click', ()=>{
+            const team = teamSelect.value;
+            let member = memberSelect.value;
+            const action = actionSelect.value;
+            if(parseInt(action)!==6 && !member) { alert("請選擇成員"); return; }
+            const res = addRecord(team, member, action);
+            alert(res.msg);
+        });
+        document.getElementById('resetAllDataBtn')?.addEventListener('click', resetAll);
+    }
+
+    function renderAll() {
+        renderTopScoreBar();
+        renderTeams();
+        renderLogTable();
+        bindQuickActions();
+        bindForm();
+        updateCountdown();
+    }
+
+    loadFromLocal();
+    renderAll();
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 </script>
 </body>
 </html>
